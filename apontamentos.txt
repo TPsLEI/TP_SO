@@ -11,3 +11,32 @@ Alguns conceitos fundamentais que são precisos saber: (apresentacão)
 	- Sincronização e/ou sinalização: uma solução para uma situação de competição que permite 
 	que uma thread execute sobre uma secção crítica.
 	
+Tópicos: 
+
+	- O kernel é o ficheiro principal do projeto, que faz os prints e cria as threads e essa merda toda
+
+	- MEM, unidade principal de armazenamento de dados
+	
+	- CPU é o responsável pela gestão das tarefas
+	
+	- Middleware é a comunicação entre tudo utilizando protocolos de comunicação
+	
+	- O kernel deve ser o elemento onde o middleware esta apoiado
+	
+	- Outra funcionalidade do middleware é simular uma comunicação (um print, ou escreve um ficheiro)
+	
+	- Funcionalidades avançadas, está tudo a correr e há um processo que está a monitorar tudo, ou guardar num sistema de bases de dados, ou json ou assim
+	
+	- Criar um ficheiro de configurações para testes, ou para o stor testar no fim
+	
+	- Ficheiro de configuração que arranque tudo
+	
+	- Ambiente Java em que desenvolvemos (relatório)
+	
+	- Comandos necessários para correr (relatório)
+	
+	- Justificar uso de certos mecanismos de sincronização (relatório)
+	
+	- Colocar as cenas que não metemos mas que foi pedido (relatório)
+	
+	- EM PDF (relatório)
