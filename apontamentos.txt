@@ -1,0 +1,13 @@
+Alguns conceitos fundamentais que são precisos saber: (apresentacão)
+
+	- Recurso partilhado: um recurso computacional que é partilhado por múltiplas thread.
+	
+	- Secção crítica: secção do código que envolve um recurso partilhado em que o seu estado
+	pode ser potencialmente alterado por múltiplas thread.
+	
+	- Situação de competição (race condition): uma situação em que não é possível determinar o
+	estado do recurso partilhado que ocorre numa secção crítica.
+	
+	- Sincronização e/ou sinalização: uma solução para uma situação de competição que permite 
+	que uma thread execute sobre uma secção crítica.
+	
