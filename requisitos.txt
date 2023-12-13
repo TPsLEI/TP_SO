@@ -1,0 +1,6 @@
+- o sistema deve ser capaz de receber dados 
+- o sistema deve ser capaz de armazenar esses dados 
+- o utilizador deve ser capaz de conseguir visualizar esses dados
+- o utilizador deve ser capaz de exportar esses dados
+- o sistema deve ser capaz de enviar dados, tendo em conta os dados recebidos (resposta)
+- o sistema deve ser capaz de registar o tempo de processamento das ações
