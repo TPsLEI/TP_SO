@@ -1,13 +1,22 @@
 package projeto;
 
-import java.util.Scanner;
-
 public class Middleware {
-    public void getUserInput(Kernel kernel) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Insere um número: ");
-        String userInput = scanner.nextLine();
+    private Estacao estacao;
 
-        kernel.displayData(userInput);
+    public Middleware(Estacao estacao) {
+        this.estacao = estacao;
+    }
+
+    public void sendDataToKernel() {
+        Thread thread = new Thread(() -> {
+            String name = estacao.getName();
+            String username = estacao.getUsername();
+            String password = estacao.getPassword();
+
+            Kernel kernel = new Kernel();
+            kernel.receiveData(name, username, password);
+        });
+
+        thread.start();
     }
 }

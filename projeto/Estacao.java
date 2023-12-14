@@ -1,7 +1,7 @@
 package projeto;
 
 public class Estacao {
-    private String name, username, password;
+    String name, username, password;
 
     public Estacao() {
     }
