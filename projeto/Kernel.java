@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Kernel {
 
     static Scanner scanner = new Scanner(System.in);
+    static Middleware middleware = new Middleware();
 
     public void receiveData(String name, String username, String password) {
-        // Process the received data as needed
         System.out.println("Received data in Kernel:");
         System.out.println("------------------------------");
         System.out.println("Name     : " + name);
@@ -40,9 +40,7 @@ public class Kernel {
         while (!dataProvided) {
             Estacao estacao = kernel.askForData();
 
-            // Check if any field is empty
             if (!estacao.name.isEmpty() && !estacao.username.isEmpty() && !estacao.password.isEmpty()) {
-                // Data provided, exit the loop
                 dataProvided = true;
 
                 Middleware middleware = new Middleware(estacao);
@@ -51,6 +49,10 @@ public class Kernel {
                 System.out.println("Por favor, preencha todos os campos.");
             }
         }
+
+        middleware.waitMessageFromStation();
+        middleware.sendMessageToStation("Olá");
+
         scanner.close();
     }
 }
