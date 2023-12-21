@@ -1,11 +1,15 @@
 package projeto;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 
 public class BaseFrame extends JFrame {
 
-    public BaseFrame() throws HeadlessException {
-        this.setTitle("");
+    public BaseFrame() {
+        setTitle("Base Theme");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        setVisible(true);
     }
 }
