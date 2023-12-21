@@ -1,4 +1,4 @@
-package projeto;
+package com.grupo_a.projeto;
 
 import javax.swing.*;
 import java.awt.*;

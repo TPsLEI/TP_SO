@@ -1,4 +1,4 @@
-package projeto;
+package com.grupo_a.projeto;
 
 public class Estacao {
     String name, username, password;

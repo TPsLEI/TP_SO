@@ -1,4 +1,4 @@
-package projeto;
+package com.grupo_a.projeto;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
