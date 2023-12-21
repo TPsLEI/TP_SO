@@ -8,7 +8,7 @@ public class Kernel {
         LinkedBlockingQueue<String> dataQueue = new LinkedBlockingQueue<>();
 
         SwingUtilities.invokeLater(() -> {
-            Middleware middleware = new Middleware(dataQueue);
+            Login loginForm = new Login();
         });
 
         MEM mem = new MEM("dados.csv");
