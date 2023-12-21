@@ -5,9 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.nio.file.*;
+import java.io.InputStream;
 import org.json.JSONObject;
-import org.json.JSONArray;
 
 public class Login extends JFrame implements ActionListener {
     JButton b1;
@@ -47,40 +46,43 @@ public class Login extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         String userValue = textField1.getText();
         String passValue = textField2.getText();
+        boolean userFound = false;
 
         try {
-            String jsonFilePath = "src/main/java/com/grupo_a/projeto/users.json";
-            String jsonContent = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-            JSONObject json = new JSONObject(jsonContent);
+            InputStream inputStream = Login.class.getClassLoader()
+                    .getResourceAsStream("com/grupo_a/projeto/users.json");
+            if (inputStream != null) {
+                String jsonContent = new String(inputStream.readAllBytes());
+                JSONObject json = new JSONObject(jsonContent);
 
-            boolean userFound = false;
-            for (String key : json.keySet()) {
-                JSONObject userData = json.getJSONObject(key);
-                String username = userData.getString("username");
+                for (String key : json.keySet()) {
+                    JSONObject userData = json.getJSONObject(key);
+                    String username = userData.getString("username");
 
-                if (username.equals(userValue)) {
-                    userFound = true;
-                    String storedPassword = userData.getString("password");
+                    if (username.equals(userValue)) {
+                        userFound = true;
+                        String storedPassword = userData.getString("password");
 
-                    if (passValue.equals(storedPassword)) {
-                        String name = userData.getString("name");
+                        if (passValue.equals(storedPassword)) {
+                            String name = userData.getString("name");
 
-                        MenuPage page = new MenuPage();
-                        JLabel wel_label = new JLabel("Bem-Vindo: " + name);
-                        page.getContentPane().add(wel_label);
+                            MenuPage page = new MenuPage();
+                            JLabel wel_label = new JLabel("Bem-Vindo: " + name);
+                            page.getContentPane().add(wel_label);
 
-                        page.addWindowListener(new java.awt.event.WindowAdapter() {
-                            @Override
-                            public void windowOpened(java.awt.event.WindowEvent windowEvent) {
-                                frame.dispose();
-                            }
-                        });
+                            page.addWindowListener(new java.awt.event.WindowAdapter() {
+                                @Override
+                                public void windowOpened(java.awt.event.WindowEvent windowEvent) {
+                                    frame.dispose();
+                                }
+                            });
 
-                        page.setVisible(true);
-                    } else {
-                        System.out.println("Password errada. Por favor, tente novamente.");
+                            page.setVisible(true);
+                        } else {
+                            System.out.println("Password errada. Por favor, tente novamente.");
+                        }
+                        break;
                     }
-                    break;
                 }
             }
 
