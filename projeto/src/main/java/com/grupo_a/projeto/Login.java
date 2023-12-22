@@ -1,96 +1,122 @@
 package com.grupo_a.projeto;
 
+import org.pushingpixels.substance.api.skin.SubstanceRavenLookAndFeel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.swing.border.EmptyBorder;
 import org.json.JSONObject;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class Login extends JFrame implements ActionListener {
-    JButton b1;
-    JFrame frame;
-    JLabel userLabel, passLabel;
-    final JTextField textField1, textField2;
+public class Login extends BaseFrame implements ActionListener {
+    private JButton loginButton;
+    private JLabel userLabel, passLabel;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
 
-    Login() {
-        frame = new JFrame();
-        frame.setTitle("Login");
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public Login() {
+        super("Login");
+
+        System.setProperty("substance.laf.decorations", "true");
+        System.setProperty("substance.laf.componentFocusKind", "NONE");
+        System.setProperty("substance.laf.skin", "org.pushingpixels.substance.api.skin.SubstanceRavenLookAndFeel");
+        System.setProperty("substance.laf.theme", "org.pushingpixels.substance.api.skin.SubstanceLightTheme");
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
+        panel.setLayout(new GridLayout(3, 2, 10, 10)); // Add some spacing between components
 
         userLabel = new JLabel("Username");
-        textField1 = new JTextField(15);
+        usernameField = new JTextField(15);
         passLabel = new JLabel("Password");
-        textField2 = new JPasswordField(15);
+        passwordField = new JPasswordField(15);
+
+        // Add ActionListener to usernameField
+        usernameField.addActionListener(this);
+
+        // Add KeyAdapter to passwordField to handle "Enter" key
+        passwordField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loginButton.doClick(); // Simulate button click
+                }
+            }
+        });
 
         panel.add(userLabel);
-        panel.add(textField1);
+        panel.add(usernameField);
         panel.add(passLabel);
-        panel.add(textField2);
+        panel.add(passwordField);
 
-        b1 = new JButton("Iniciar Sessao");
+        loginButton = new JButton("Login");
+        loginButton.setBackground(new Color(30, 144, 255));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
 
-        frame.add(panel, BorderLayout.CENTER);
-        frame.add(b1, BorderLayout.SOUTH);
+        add(panel, BorderLayout.CENTER);
+        add(loginButton, BorderLayout.SOUTH);
 
-        b1.addActionListener(this);
+        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        frame.setVisible(true);
+        loginButton.addActionListener(this);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public void actionPerformed(ActionEvent ae) {
-        String userValue = textField1.getText();
-        String passValue = textField2.getText();
-        boolean userFound = false;
+        if (ae.getSource() == loginButton) {
+            String userValue = usernameField.getText();
+            String passValue = passwordField.getText();
+            boolean userFound = false;
 
-        try {
-            InputStream inputStream = Login.class.getClassLoader()
-                    .getResourceAsStream("com/grupo_a/projeto/users.json");
-            if (inputStream != null) {
-                String jsonContent = new String(inputStream.readAllBytes());
-                JSONObject json = new JSONObject(jsonContent);
+            try {
+                InputStream inputStream = Login.class.getClassLoader()
+                        .getResourceAsStream("com/grupo_a/projeto/users.json");
+                if (inputStream != null) {
+                    String jsonContent = new String(inputStream.readAllBytes());
+                    JSONObject json = new JSONObject(jsonContent);
 
-                for (String key : json.keySet()) {
-                    JSONObject userData = json.getJSONObject(key);
-                    String username = userData.getString("username");
+                    for (String key : json.keySet()) {
+                        JSONObject userData = json.getJSONObject(key);
+                        String username = userData.getString("username");
 
-                    if (username.equals(userValue)) {
-                        userFound = true;
-                        String storedPassword = userData.getString("password");
+                        if (username.equals(userValue)) {
+                            userFound = true;
+                            String storedPassword = userData.getString("password");
 
-                        if (passValue.equals(storedPassword)) {
-                            String name = userData.getString("name");
+                            if (passValue.equals(storedPassword)) {
+                                String name = userData.getString("name");
 
-                            MenuPage page = new MenuPage();
-                            JLabel wel_label = new JLabel("Bem-Vindo: " + name);
-                            page.getContentPane().add(wel_label);
+                                MenuPage page = new MenuPage(name);
 
-                            page.addWindowListener(new java.awt.event.WindowAdapter() {
-                                @Override
-                                public void windowOpened(java.awt.event.WindowEvent windowEvent) {
-                                    frame.dispose();
-                                }
-                            });
+                                page.addWindowListener(new java.awt.event.WindowAdapter() {
+                                    @Override
+                                    public void windowOpened(java.awt.event.WindowEvent windowEvent) {
+                                        dispose();
+                                    }
+                                });
 
-                            page.setVisible(true);
-                        } else {
-                            System.out.println("Password errada. Por favor, tente novamente.");
+                                page.setVisible(true);
+                            } else {
+                                System.out.println("Password errada. Por favor, tente novamente.");
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
-            }
 
-            if (!userFound) {
-                System.out.println("Utilizador não encontrado. Por favor, tente novamente.");
+                if (!userFound) {
+                    System.out.println("Utilizador não encontrado. Por favor, tente novamente.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

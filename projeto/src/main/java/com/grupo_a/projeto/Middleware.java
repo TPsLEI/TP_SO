@@ -17,10 +17,8 @@ public class Middleware {
     }
 
     private void initUI() {
-        JFrame frame = new JFrame("Message Input Window");
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
+        MessagePage frame = new MessagePage();
+        frame.setSize(300, 200);
 
         JLabel label = new JLabel("Enter a message:");
         frame.add(label, BorderLayout.NORTH);

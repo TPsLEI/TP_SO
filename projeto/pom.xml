@@ -13,9 +13,14 @@
     </properties>
     <dependencies>
         <dependency>
-        <groupId>org.json</groupId>
-        <artifactId>json</artifactId>
-        <version>20231013</version>
-    </dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pushing-pixels</groupId>
+            <artifactId>radiance-substance</artifactId>
+            <version>4.5.0</version>
+        </dependency>
     </dependencies>
 </project>
