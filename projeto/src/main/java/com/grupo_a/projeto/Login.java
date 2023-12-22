@@ -75,7 +75,7 @@ public class Login extends BaseFrame implements ActionListener {
 
             try {
                 InputStream inputStream = Login.class.getClassLoader()
-                        .getResourceAsStream("com/grupo_a/projeto/users.json");
+                        .getResourceAsStream("com/grupo_a/projeto/files/users.json");
                 if (inputStream != null) {
                     String jsonContent = new String(inputStream.readAllBytes());
                     JSONObject json = new JSONObject(jsonContent);

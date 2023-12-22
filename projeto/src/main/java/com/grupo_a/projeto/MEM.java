@@ -1,14 +1,14 @@
 package com.grupo_a.projeto;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.*;
 
 public class MEM {
     private String csvFileName;
 
     public MEM(String csvFileName) {
-        this.csvFileName = csvFileName;
+        String currentPath = "./projeto/src/main/java/com/grupo_a/projeto/files";
+        this.csvFileName = Paths.get(currentPath, csvFileName).toString();
     }
 
     public void writeMessage(String message) {

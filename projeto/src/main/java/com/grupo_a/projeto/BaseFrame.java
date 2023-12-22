@@ -27,7 +27,7 @@ public class BaseFrame extends JFrame {
 
     private void addLogo() {
         try {
-            ImageIcon logoIcon = new ImageIcon(getClass().getResource("/com/grupo_a/projeto/logo.png"));
+            ImageIcon logoIcon = new ImageIcon(getClass().getResource("/com/grupo_a/projeto/logo/logo.png"));
 
             JLabel logoLabel = new JLabel(logoIcon);
             logoLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -42,7 +42,7 @@ public class BaseFrame extends JFrame {
 
     private void setApplicationIcon() {
         try {
-            BufferedImage logoImage = ImageIO.read(getClass().getResource("/com/grupo_a/projeto/logo.png"));
+            BufferedImage logoImage = ImageIO.read(getClass().getResource("/com/grupo_a/projeto/logo/logo.png"));
 
             setIconImage(logoImage);
         } catch (IOException e) {

@@ -18,16 +18,34 @@ public class Middleware {
 
     private void initUI() {
         MessagePage frame = new MessagePage();
-        frame.setSize(300, 200);
+        frame.setSize(400, 200);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Create and configure a JPanel for a cleaner layout
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
         JLabel label = new JLabel("Enter a message:");
-        frame.add(label, BorderLayout.NORTH);
+        panel.add(label, BorderLayout.NORTH);
 
         textField = new JTextField();
-        frame.add(textField, BorderLayout.CENTER);
+        panel.add(textField, BorderLayout.CENTER);
 
         JButton sendButton = new JButton("Send Message");
-        frame.add(sendButton, BorderLayout.SOUTH);
+        JButton voltarButton = new JButton("Voltar");
+
+        // Create a subpanel for the buttons and use FlowLayout
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(sendButton);
+        buttonPanel.add(voltarButton);
+
+        panel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Add an EmptyBorder to give some padding around the panel
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Add the panel to the frame
+        frame.add(panel);
 
         sendButton.addActionListener(new ActionListener() {
             @Override
@@ -38,6 +56,16 @@ public class Middleware {
             }
         });
 
+        voltarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose(); // Close the MessagePage window
+            }
+        });
+
         frame.setVisible(true);
     }
+
+
+
 }

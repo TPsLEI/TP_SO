@@ -1,66 +1,112 @@
 package com.grupo_a.projeto;
 
+import java.io.IOException;
+import java.io.InputStream;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.nio.charset.StandardCharsets;
 
 public class SattelitePage extends BaseFrame {
 
     public SattelitePage() {
         super("Satélite");
         setSize(960, 600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Create a panel for the main content
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        // Create a black box with white text
         JTextArea textBox = new JTextArea();
+        textBox.setPreferredSize(new Dimension(650, 200));
+        textBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
         textBox.setBackground(Color.BLACK);
         textBox.setForeground(Color.WHITE);
-        textBox.setEditable(false); // Make it read-only
-        textBox.setText("This is a black box with white text.");
+        textBox.setEditable(false);
 
-        // Set max size and padding for the black box
-        Dimension maxBoxSize = new Dimension(150, 100);
-        textBox.setMaximumSize(maxBoxSize);
-        textBox.setBorder(BorderFactory.createEmptyBorder(15, 5, 0, 0)); // Top and left padding
+        try (InputStream inputStream = SattelitePage.class.getClassLoader()
+                .getResourceAsStream("com/grupo_a/projeto/files/dados.csv");) {
+            if (inputStream != null) {
+                byte[] bytes = inputStream.readAllBytes();
+                String fileContent = new String(bytes, StandardCharsets.UTF_8);
+                textBox.setText(fileContent);
+            } else {
+                System.out.println(inputStream);
+                textBox.setText("Erro! Mensagens não encontradas");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            textBox.setText("Erro! Mensagens não carregadas");
+        }
 
-        // Create buttons under the box
-        JButton button3 = new JButton("Button 3");
-        JButton button4 = new JButton("Button 4");
+        JButton deleteBox = new JButton("Limpar Consola");
+        JButton exportMessages = new JButton("Exportar Mensagens");
 
-        // Set height of buttons 3 and 4
-        button3.setPreferredSize(new Dimension(100, 20));
-        button4.setPreferredSize(new Dimension(100, 20));
+        JButton seeLogs = new JButton("Ver Logs");
+        JButton exportLogs = new JButton("Exportar Logs");
+        JButton exitPage = new JButton("Voltar");
 
-        // Create buttons on the right side of the box
-        JButton button1 = new JButton("Button 1");
-        JButton button2 = new JButton("Button 2");
+        int buttonHeight = 20;
+        seeLogs.setPreferredSize(new Dimension(150, buttonHeight));
+        exportLogs.setPreferredSize(new Dimension(150, buttonHeight));
+        exitPage.setPreferredSize(new Dimension(150, buttonHeight));
 
-        // Set height of buttons 1 and 2
-        button1.setPreferredSize(new Dimension(50, 20));
-        button2.setPreferredSize(new Dimension(50, 20));
+        deleteBox.setPreferredSize(new Dimension(150, buttonHeight));
+        exportMessages.setPreferredSize(new Dimension(150, buttonHeight));
 
-        // Add padding for button 1
-        JPanel button1Panel = new JPanel();
-        button1Panel.setLayout(new FlowLayout());
-        button1Panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 25));
-        button1Panel.add(button1);
-
-        // Add padding and layout adjustments for buttons 3 and 4
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 25, 10, 0));
-        buttonPanel.add(button3);
-        buttonPanel.add(button4);
+        buttonPanel.add(seeLogs);
+        buttonPanel.add(exportLogs);
+        buttonPanel.add(exitPage);
 
-        // Set up the layout
-        mainPanel.add(textBox, BorderLayout.CENTER);
-        mainPanel.add(button1Panel, BorderLayout.EAST);
-        mainPanel.add(button2, BorderLayout.EAST);
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+        JPanel messagePanel = new JPanel();
+        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
+        messagePanel.add(deleteBox);
+        messagePanel.add(exportMessages);
 
-        // Add the main panel to the frame
+        mainPanel.add(textBox, BorderLayout.WEST);
+        mainPanel.add(messagePanel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.PAGE_END);
+
+        deleteBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textBox.setText("");
+                JOptionPane.showMessageDialog(SattelitePage.this, "Consola limpa com sucesso..");
+            }
+        });
+
+        exportMessages.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicou no botao de exportar mensagens");
+            }
+        });
+
+        seeLogs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicou no botao de ver as logs");
+            }
+        });
+
+        exportLogs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("clicou no botao de exportar as logs");
+            }
+        });
+
+        exitPage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
         add(mainPanel);
     }
 }
