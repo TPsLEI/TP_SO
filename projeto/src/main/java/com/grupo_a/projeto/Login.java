@@ -91,6 +91,8 @@ public class Login extends BaseFrame implements ActionListener {
                             if (passValue.equals(storedPassword)) {
                                 String name = userData.getString("name");
 
+                                Logs.log("O Utilizador " + name + " autenticou-se.");
+
                                 MenuPage page = new MenuPage(name);
 
                                 page.addWindowListener(new java.awt.event.WindowAdapter() {

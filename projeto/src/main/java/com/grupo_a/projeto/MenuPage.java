@@ -19,7 +19,8 @@ public class MenuPage extends BaseFrame {
         accessSatelliteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MenuPage.this, "Accessing Satellite...");
+                SattelitePage sattelitePage = new SattelitePage();
+                sattelitePage.setVisible(true);
             }
         });
 

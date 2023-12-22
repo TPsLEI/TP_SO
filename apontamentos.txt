@@ -40,3 +40,12 @@ Tópicos:
 	- Colocar as cenas que não metemos mas que foi pedido (relatório)
 	
 	- EM PDF (relatório)
+
+
+
+
+Página Satélite
+	- Ecrã para ver as mensagens 
+	- Botão para exportar as mensagens
+	- Ecrã para ver as logs
+	- Botão para exportar as logs
