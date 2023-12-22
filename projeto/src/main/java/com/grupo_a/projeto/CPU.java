@@ -16,7 +16,7 @@ public class CPU extends Thread {
     public void run() {
         while (true) {
             try {
-                String message = dataQueue.take(); // Dequeue the message
+                String message = dataQueue.take();
 
                 if ("stop".equals(message)) {
                     System.out.println("Programa encerrado.");
@@ -26,7 +26,6 @@ public class CPU extends Thread {
                 LocalDateTime timestamp = LocalDateTime.now();
                 String formattedMessage = timestamp + "," + message;
 
-                // Write the formatted message to MEM (CSV file)
                 mem.writeMessage(formattedMessage);
             } catch (InterruptedException e) {
                 e.printStackTrace();

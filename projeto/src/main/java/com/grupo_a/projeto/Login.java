@@ -28,22 +28,20 @@ public class Login extends BaseFrame implements ActionListener {
         System.setProperty("substance.laf.theme", "org.pushingpixels.substance.api.skin.SubstanceLightTheme");
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2, 10, 10)); // Add some spacing between components
+        panel.setLayout(new GridLayout(3, 2, 10, 10));
 
         userLabel = new JLabel("Username");
         usernameField = new JTextField(15);
         passLabel = new JLabel("Password");
         passwordField = new JPasswordField(15);
 
-        // Add ActionListener to usernameField
         usernameField.addActionListener(this);
 
-        // Add KeyAdapter to passwordField to handle "Enter" key
         passwordField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    loginButton.doClick(); // Simulate button click
+                    loginButton.doClick();
                 }
             }
         });

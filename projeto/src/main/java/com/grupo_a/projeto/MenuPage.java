@@ -13,11 +13,9 @@ public class MenuPage extends BaseFrame {
         super("Menu");
         setSize(450, 170);
 
-        // Create buttons for different options
         JButton accessSatelliteButton = new JButton("Access Satellite");
         JButton sendMessageButton = new JButton("Send Message");
 
-        // Set up action listeners for the buttons
         accessSatelliteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -35,35 +33,31 @@ public class MenuPage extends BaseFrame {
             }
         });
 
-        // Set layout manager for the frame
         setLayout(new BorderLayout());
 
-        // Add a label with instructions
         JLabel instructionLabel = new JLabel("Bem-vindo " + name);
         instructionLabel.setHorizontalAlignment(JLabel.LEFT);
-        instructionLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 0, 0)); // Add padding
+        instructionLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 0, 0));
         instructionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         add(instructionLabel, BorderLayout.NORTH);
 
-        // Create a Box to center the buttons vertically
         Box buttonBox = Box.createVerticalBox();
-        buttonBox.add(Box.createVerticalGlue()); // Top glue
+        buttonBox.add(Box.createVerticalGlue());
 
-        // Add buttons to the frame in a horizontal layout
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(accessSatelliteButton);
         buttonPanel.add(sendMessageButton);
 
         buttonBox.add(buttonPanel);
-        buttonBox.add(Box.createVerticalGlue()); // Bottom glue
+        buttonBox.add(Box.createVerticalGlue());
 
         add(buttonBox, BorderLayout.CENTER);
-    
-        //Middleware middleware = new Middleware(dataQueue);
 
-        //MEM mem = new MEM("dados.csv");
-        //CPU thread = new CPU(dataQueue, mem);
-        //thread.start();
+        // Middleware middleware = new Middleware(dataQueue);
+
+        // MEM mem = new MEM("dados.csv");
+        // CPU thread = new CPU(dataQueue, mem);
+        // thread.start();
     }
 
 }
