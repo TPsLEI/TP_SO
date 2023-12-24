@@ -1,21 +1,15 @@
 package com.grupo_a.projeto;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.concurrent.Semaphore;
-import java.nio.file.*;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Semaphore;
+import java.time.format.DateTimeFormatter;
 
 public class Logs {
     private static final String LOG_FILE = "./projeto/src/main/java/com/grupo_a/projeto/files/logs.csv";
@@ -26,7 +20,8 @@ public class Logs {
         try {
             semaphore.acquire();
             Files.createDirectories(Paths.get("./projeto/src/main/java/com/grupo_a/projeto/files"));
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) {
+            try (BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(LOG_FILE, true), StandardCharsets.UTF_8))) {
                 LocalDateTime timestamp = LocalDateTime.now();
                 String formattedTimestamp = timestamp.format(formatter);
                 writer.write(formattedTimestamp + " , " + message + "\n");
@@ -38,4 +33,5 @@ public class Logs {
         }
     }
 }
+
 

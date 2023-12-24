@@ -31,7 +31,7 @@ public class CPU extends Thread {
                 String formattedTimestamp = timestamp.format(formatter);
                 String formattedMessage = formattedTimestamp + " , De: " + userName + " , \"" + message + "\"";
 
-                mem.writeMessage(formattedMessage);
+                mem.writeMessage(formattedMessage, userName);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
