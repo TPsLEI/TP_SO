@@ -89,7 +89,8 @@ public class SattelitePage extends BaseFrame {
         seeLogs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("clicou no botao de ver as logs");
+                LogsPage logsPage = new LogsPage();
+                logsPage.setVisible(true);
             }
         });
 

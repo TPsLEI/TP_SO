@@ -8,6 +8,7 @@ public class Kernel {
 
         SwingUtilities.invokeLater(() -> {
             Login loginForm = new Login();
+            loginForm.setVisible(true);
         });
 
     }

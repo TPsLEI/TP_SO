@@ -1,15 +1,19 @@
 package com.grupo_a.projeto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class CPU extends Thread {
     private LinkedBlockingQueue<String> dataQueue;
     private MEM mem;
+    private String userName;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public CPU(LinkedBlockingQueue<String> dataQueue, MEM mem) {
+    public CPU(LinkedBlockingQueue<String> dataQueue, MEM mem, String userName) {
         this.dataQueue = dataQueue;
         this.mem = mem;
+        this.userName = userName;
     }
 
     @Override
@@ -24,7 +28,8 @@ public class CPU extends Thread {
                 }
 
                 LocalDateTime timestamp = LocalDateTime.now();
-                String formattedMessage = timestamp + "," + message;
+                String formattedTimestamp = timestamp.format(formatter);
+                String formattedMessage = formattedTimestamp + " , De: " + userName + " , \"" + message + "\"";
 
                 mem.writeMessage(formattedMessage);
             } catch (InterruptedException e) {
@@ -33,3 +38,5 @@ public class CPU extends Thread {
         }
     }
 }
+
+

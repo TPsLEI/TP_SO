@@ -29,7 +29,7 @@ public class MenuPage extends BaseFrame {
             public void actionPerformed(ActionEvent e) {
                 Middleware middleware = new Middleware(dataQueue);
                 MEM mem = new MEM("dados.csv");
-                CPU thread = new CPU(dataQueue, mem);
+                CPU thread = new CPU(dataQueue, mem, name);
                 thread.start();
             }
         });

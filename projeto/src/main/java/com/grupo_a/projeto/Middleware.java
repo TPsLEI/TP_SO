@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Middleware {
 
@@ -46,6 +48,15 @@ public class Middleware {
 
         // Add the panel to the frame
         frame.add(panel);
+
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    sendButton.doClick();
+                }
+            }
+        });
 
         sendButton.addActionListener(new ActionListener() {
             @Override
