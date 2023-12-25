@@ -3,6 +3,7 @@ package com.grupo_a.projeto;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.swing.JOptionPane;
 
 public class CPU extends Thread {
     private LinkedBlockingQueue<String> dataQueue;
@@ -32,11 +33,23 @@ public class CPU extends Thread {
                 String formattedMessage = formattedTimestamp + " , De: " + userName + " , \"" + message + "\"";
 
                 mem.writeMessage(formattedMessage, userName);
+
+                Thread.sleep(3000);
+
+                showMessageBox(message);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    private void showMessageBox(String message) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Resposta a: " + message + "\nOk, " + userName,
+                    "Resposta do Satélite",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
 }
-
-

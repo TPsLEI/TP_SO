@@ -1,9 +1,8 @@
 package com.grupo_a.projeto;
 
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,12 +15,11 @@ public class Logs {
     private static final Semaphore semaphore = new Semaphore(1);
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-    public static void log(String message) {
+    public static synchronized void log(String message) {
         try {
             semaphore.acquire();
             Files.createDirectories(Paths.get("./projeto/src/main/java/com/grupo_a/projeto/files"));
-            try (BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(new FileOutputStream(LOG_FILE, true), StandardCharsets.UTF_8))) {
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(LOG_FILE), StandardCharsets.UTF_8)) {
                 LocalDateTime timestamp = LocalDateTime.now();
                 String formattedTimestamp = timestamp.format(formatter);
                 writer.write(formattedTimestamp + " , " + message + "\n");
@@ -33,5 +31,3 @@ public class Logs {
         }
     }
 }
-
-

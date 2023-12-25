@@ -12,6 +12,7 @@ public class MenuPage extends BaseFrame {
     public MenuPage(String name) {
         super("Menu");
         setSize(450, 170);
+        setResizable(false);
 
         JButton accessSatelliteButton = new JButton("Access Satellite");
         JButton sendMessageButton = new JButton("Send Message");
