@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class MEM {
@@ -16,7 +15,8 @@ public class MEM {
     }
 
     public synchronized void writeMessage(String message, String name) {
-        try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(csvFileName), StandardCharsets.UTF_8)) {
+        try (BufferedWriter writer = new BufferedWriter(
+                new FileWriter(csvFileName, StandardCharsets.UTF_8, true))) {
             Logs.log("O Utilizador " + name + " enviou uma mensagem.");
             writer.write(message + "\n");
         } catch (IOException e) {
@@ -24,3 +24,4 @@ public class MEM {
         }
     }
 }
+

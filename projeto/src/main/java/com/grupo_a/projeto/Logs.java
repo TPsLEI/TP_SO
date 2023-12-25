@@ -19,7 +19,8 @@ public class Logs {
         try {
             semaphore.acquire();
             Files.createDirectories(Paths.get("./projeto/src/main/java/com/grupo_a/projeto/files"));
-            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(LOG_FILE), StandardCharsets.UTF_8)) {
+            try (BufferedWriter writer = new BufferedWriter(
+                    new FileWriter(LOG_FILE, StandardCharsets.UTF_8, true))) {
                 LocalDateTime timestamp = LocalDateTime.now();
                 String formattedTimestamp = timestamp.format(formatter);
                 writer.write(formattedTimestamp + " , " + message + "\n");
@@ -31,3 +32,4 @@ public class Logs {
         }
     }
 }
+

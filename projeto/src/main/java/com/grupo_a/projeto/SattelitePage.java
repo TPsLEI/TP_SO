@@ -33,6 +33,7 @@ public class SattelitePage extends BaseFrame {
 
         JButton deleteBox = new JButton("Limpar Consola");
         JButton exportMessages = new JButton("Exportar Mensagens");
+        JButton seeGraph = new JButton("Ver gráfico");
 
         JButton seeLogs = new JButton("Ver Logs");
         JButton exportLogs = new JButton("Exportar Logs");
@@ -45,6 +46,7 @@ public class SattelitePage extends BaseFrame {
 
         deleteBox.setPreferredSize(new Dimension(150, buttonHeight));
         exportMessages.setPreferredSize(new Dimension(150, buttonHeight));
+        seeGraph.setPreferredSize(new Dimension(150, buttonHeight));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -57,6 +59,7 @@ public class SattelitePage extends BaseFrame {
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
         messagePanel.add(deleteBox);
         messagePanel.add(exportMessages);
+        messagePanel.add(seeGraph);
 
         mainPanel.add(textBox, BorderLayout.WEST);
         mainPanel.add(messagePanel, BorderLayout.CENTER);
@@ -103,6 +106,12 @@ public class SattelitePage extends BaseFrame {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Mensagens não carregadas");
             }
+        });
+
+        seeGraph.addActionListener(e -> {
+            GraphPage graphPage = new GraphPage();
+            graphPage.setVisible(true);
+            Logs.log("O Utilizador " + name + " acedeu ao gráfico.");
         });
 
 
