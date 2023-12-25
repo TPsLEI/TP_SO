@@ -2,6 +2,9 @@ package com.grupo_a.projeto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -66,8 +69,42 @@ public class SattelitePage extends BaseFrame {
         });
 
         exportMessages.addActionListener(e -> {
-            System.out.println("clicou no botao de exportar mensagens");
+            try (InputStream inputStream = SattelitePage.class.getClassLoader()
+                    .getResourceAsStream("com/grupo_a/projeto/files/dados.csv")) {
+                if (inputStream != null) {
+                    byte[] bytes = inputStream.readAllBytes();
+                    String fileContent = new String(bytes, StandardCharsets.UTF_8);
+        
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Exportar Mensagens");
+                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        
+                    int userSelection = fileChooser.showSaveDialog(SattelitePage.this);
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+        
+                        String exportFilePath = selectedFile.getAbsolutePath();
+                        if (!exportFilePath.toLowerCase().endsWith(".csv")) {
+                            exportFilePath += ".csv";
+                        }
+        
+                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
+                            writer.write(fileContent);
+                            JOptionPane.showMessageDialog(SattelitePage.this, "Mensagens exportadas para " + exportFilePath);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            JOptionPane.showMessageDialog(SattelitePage.this, "Erro ao exportar as mensagens");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Mensagens não encontradas");
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Mensagens não carregadas");
+            }
         });
+
 
         seeLogs.addActionListener(e -> {
             LogsPage logsPage = new LogsPage();
@@ -76,7 +113,40 @@ public class SattelitePage extends BaseFrame {
         });
 
         exportLogs.addActionListener(e -> {
-            System.out.println("clicou no botao de exportar as logs");
+            try (InputStream inputStream = SattelitePage.class.getClassLoader()
+                    .getResourceAsStream("com/grupo_a/projeto/files/logs.csv")) {
+                if (inputStream != null) {
+                    byte[] bytes = inputStream.readAllBytes();
+                    String fileContent = new String(bytes, StandardCharsets.UTF_8);
+        
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Exportar Logs");
+                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        
+                    int userSelection = fileChooser.showSaveDialog(SattelitePage.this);
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+        
+                        String exportFilePath = selectedFile.getAbsolutePath();
+                        if (!exportFilePath.toLowerCase().endsWith(".csv")) {
+                            exportFilePath += ".csv";
+                        }
+        
+                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
+                            writer.write(fileContent);
+                            JOptionPane.showMessageDialog(SattelitePage.this, "Logs exportadas para " + exportFilePath);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            JOptionPane.showMessageDialog(SattelitePage.this, "Erro ao exportar as logs");
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Logs não encontradas");
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Logs não carregadas");
+            }
         });
 
         exitPage.addActionListener(e -> {
