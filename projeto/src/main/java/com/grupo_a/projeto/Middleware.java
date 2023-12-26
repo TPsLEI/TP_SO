@@ -27,13 +27,13 @@ public class Middleware {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel("Enter a message:");
+        JLabel label = new JLabel("Introduzir a Mensagem:");
         panel.add(label, BorderLayout.NORTH);
 
         textField = new JTextField();
         panel.add(textField, BorderLayout.CENTER);
 
-        JButton sendButton = new JButton("Send Message");
+        JButton sendButton = new JButton("Enviar Mensagem");
         JButton voltarButton = new JButton("Voltar");
 
         // Create a subpanel for the buttons and use FlowLayout

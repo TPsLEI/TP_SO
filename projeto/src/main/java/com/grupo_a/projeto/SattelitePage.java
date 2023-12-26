@@ -67,7 +67,7 @@ public class SattelitePage extends BaseFrame {
 
         deleteBox.addActionListener(e -> {
             textBox.setText("");
-            JOptionPane.showMessageDialog(SattelitePage.this, "Consola limpa com sucesso..");
+            JOptionPane.showMessageDialog(SattelitePage.this, "Consola limpa com sucesso...");
             Logs.log("O Utilizador " + name + " limpou as mensagens.");
         });
 
