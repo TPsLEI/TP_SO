@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class MessagePage extends BaseFrame {
@@ -7,7 +5,7 @@ public class MessagePage extends BaseFrame {
 
     MessagePage() {
         super("Message");
-        
+
     }
 
 }

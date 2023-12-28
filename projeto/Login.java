@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,7 +71,7 @@ public class Login extends BaseFrame implements ActionListener {
 
             try {
                 InputStream inputStream = Login.class.getClassLoader()
-                        .getResourceAsStream("com/grupo_a/projeto/files/users.json");
+                        .getResourceAsStream("files/users.json");
                 if (inputStream != null) {
                     String jsonContent = new String(inputStream.readAllBytes());
                     JSONObject json = new JSONObject(jsonContent);

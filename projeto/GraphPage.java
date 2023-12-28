@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,4 +13,3 @@ public class GraphPage extends BaseFrame {
 
     }
 }
-

@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.LinkedBlockingQueue;

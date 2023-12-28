@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +16,7 @@ public class LogsPage extends BaseFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 300);
         setLocationRelativeTo(null);
-        
+
         JPanel mainPanel = new JPanel(new BorderLayout());
 
         JTextArea textBox = new JTextArea();
@@ -28,7 +26,7 @@ public class LogsPage extends BaseFrame {
         textBox.setEditable(false);
 
         try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                .getResourceAsStream("com/grupo_a/projeto/files/logs.csv");) {
+                .getResourceAsStream("files/logs.csv");) {
             if (inputStream != null) {
                 byte[] bytes = inputStream.readAllBytes();
                 String fileContent = new String(bytes, StandardCharsets.UTF_8);
@@ -47,4 +45,3 @@ public class LogsPage extends BaseFrame {
         add(mainPanel);
     }
 }
-

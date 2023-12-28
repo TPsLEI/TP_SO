@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import javax.swing.*;
 
 public class Kernel {

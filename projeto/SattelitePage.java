@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
@@ -73,27 +71,28 @@ public class SattelitePage extends BaseFrame {
 
         exportMessages.addActionListener(e -> {
             try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                    .getResourceAsStream("com/grupo_a/projeto/files/dados.csv")) {
+                    .getResourceAsStream("files/dados.csv")) {
                 if (inputStream != null) {
                     byte[] bytes = inputStream.readAllBytes();
                     String fileContent = new String(bytes, StandardCharsets.UTF_8);
-        
+
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Exportar Mensagens");
                     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        
+
                     int userSelection = fileChooser.showSaveDialog(SattelitePage.this);
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         File selectedFile = fileChooser.getSelectedFile();
-        
+
                         String exportFilePath = selectedFile.getAbsolutePath();
                         if (!exportFilePath.toLowerCase().endsWith(".csv")) {
                             exportFilePath += ".csv";
                         }
-        
+
                         try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
                             writer.write(fileContent);
-                            JOptionPane.showMessageDialog(SattelitePage.this, "Mensagens exportadas para " + exportFilePath);
+                            JOptionPane.showMessageDialog(SattelitePage.this,
+                                    "Mensagens exportadas para " + exportFilePath);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             JOptionPane.showMessageDialog(SattelitePage.this, "Erro ao exportar as mensagens");
@@ -114,7 +113,6 @@ public class SattelitePage extends BaseFrame {
             Logs.log("O Utilizador " + name + " acedeu ao gráfico.");
         });
 
-
         seeLogs.addActionListener(e -> {
             LogsPage logsPage = new LogsPage();
             logsPage.setVisible(true);
@@ -123,24 +121,24 @@ public class SattelitePage extends BaseFrame {
 
         exportLogs.addActionListener(e -> {
             try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                    .getResourceAsStream("com/grupo_a/projeto/files/logs.csv")) {
+                    .getResourceAsStream("files/logs.csv")) {
                 if (inputStream != null) {
                     byte[] bytes = inputStream.readAllBytes();
                     String fileContent = new String(bytes, StandardCharsets.UTF_8);
-        
+
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Exportar Logs");
                     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        
+
                     int userSelection = fileChooser.showSaveDialog(SattelitePage.this);
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         File selectedFile = fileChooser.getSelectedFile();
-        
+
                         String exportFilePath = selectedFile.getAbsolutePath();
                         if (!exportFilePath.toLowerCase().endsWith(".csv")) {
                             exportFilePath += ".csv";
                         }
-        
+
                         try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
                             writer.write(fileContent);
                             JOptionPane.showMessageDialog(SattelitePage.this, "Logs exportadas para " + exportFilePath);
@@ -172,7 +170,7 @@ public class SattelitePage extends BaseFrame {
             protected Void doInBackground() throws Exception {
                 while (!isCancelled()) {
                     try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                            .getResourceAsStream("com/grupo_a/projeto/files/dados.csv")) {
+                            .getResourceAsStream("files/dados.csv")) {
                         if (inputStream != null) {
                             byte[] bytes = inputStream.readAllBytes();
                             String fileContent = new String(bytes, StandardCharsets.UTF_8);
@@ -184,7 +182,7 @@ public class SattelitePage extends BaseFrame {
                         publish("Erro! Mensagens não carregadas");
                     }
 
-                    TimeUnit.SECONDS.sleep(5); 
+                    TimeUnit.SECONDS.sleep(5);
                 }
                 return null;
             }
@@ -200,4 +198,3 @@ public class SattelitePage extends BaseFrame {
         worker.execute();
     }
 }
-

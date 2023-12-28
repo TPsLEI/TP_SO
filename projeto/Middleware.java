@@ -1,5 +1,3 @@
-package com.grupo_a.projeto;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,7 +21,6 @@ public class Middleware {
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Create and configure a JPanel for a cleaner layout
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
@@ -36,17 +33,14 @@ public class Middleware {
         JButton sendButton = new JButton("Enviar Mensagem");
         JButton voltarButton = new JButton("Voltar");
 
-        // Create a subpanel for the buttons and use FlowLayout
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(sendButton);
         buttonPanel.add(voltarButton);
 
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add an EmptyBorder to give some padding around the panel
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Add the panel to the frame
         frame.add(panel);
 
         textField.addKeyListener(new KeyAdapter() {
@@ -70,13 +64,11 @@ public class Middleware {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose(); // Close the MessagePage window
+                frame.dispose();
             }
         });
 
         frame.setVisible(true);
     }
-
-
 
 }
