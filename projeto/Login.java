@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.border.EmptyBorder;
-import org.json.JSONObject;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -67,52 +66,8 @@ public class Login extends BaseFrame implements ActionListener {
         if (ae.getSource() == loginButton) {
             String userValue = usernameField.getText();
             String passValue = passwordField.getText();
-            boolean userFound = false;
-
-            try {
-                InputStream inputStream = Login.class.getClassLoader()
-                        .getResourceAsStream("files/users.json");
-                if (inputStream != null) {
-                    String jsonContent = new String(inputStream.readAllBytes());
-                    JSONObject json = new JSONObject(jsonContent);
-
-                    for (String key : json.keySet()) {
-                        JSONObject userData = json.getJSONObject(key);
-                        String username = userData.getString("username");
-
-                        if (username.equals(userValue)) {
-                            userFound = true;
-                            String storedPassword = userData.getString("password");
-
-                            if (passValue.equals(storedPassword)) {
-                                String name = userData.getString("name");
-
-                                Logs.log("O Utilizador " + name + " autenticou-se.");
-
-                                MenuPage page = new MenuPage(name);
-
-                                page.addWindowListener(new java.awt.event.WindowAdapter() {
-                                    @Override
-                                    public void windowOpened(java.awt.event.WindowEvent windowEvent) {
-                                        dispose();
-                                    }
-                                });
-
-                                page.setVisible(true);
-                            } else {
-                                System.out.println("Password errada. Por favor, tente novamente.");
-                            }
-                            break;
-                        }
-                    }
-                }
-
-                if (!userFound) {
-                    System.out.println("Utilizador não encontrado. Por favor, tente novamente.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    
+            Kernel.handleLogin(userValue, passValue, this);
         }
     }
 }

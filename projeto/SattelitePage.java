@@ -70,41 +70,7 @@ public class SattelitePage extends BaseFrame {
         });
 
         exportMessages.addActionListener(e -> {
-            try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                    .getResourceAsStream("files/dados.csv")) {
-                if (inputStream != null) {
-                    byte[] bytes = inputStream.readAllBytes();
-                    String fileContent = new String(bytes, StandardCharsets.UTF_8);
-
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Exportar Mensagens");
-                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-                    int userSelection = fileChooser.showSaveDialog(SattelitePage.this);
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-
-                        String exportFilePath = selectedFile.getAbsolutePath();
-                        if (!exportFilePath.toLowerCase().endsWith(".csv")) {
-                            exportFilePath += ".csv";
-                        }
-
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
-                            writer.write(fileContent);
-                            JOptionPane.showMessageDialog(SattelitePage.this,
-                                    "Mensagens exportadas para " + exportFilePath);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                            JOptionPane.showMessageDialog(SattelitePage.this, "Erro ao exportar as mensagens");
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Mensagens não encontradas");
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Mensagens não carregadas");
-            }
+            Kernel.exportMessages("files/dados.csv", name);
         });
 
         seeGraph.addActionListener(e -> {
@@ -120,40 +86,7 @@ public class SattelitePage extends BaseFrame {
         });
 
         exportLogs.addActionListener(e -> {
-            try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                    .getResourceAsStream("files/logs.csv")) {
-                if (inputStream != null) {
-                    byte[] bytes = inputStream.readAllBytes();
-                    String fileContent = new String(bytes, StandardCharsets.UTF_8);
-
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setDialogTitle("Exportar Logs");
-                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-                    int userSelection = fileChooser.showSaveDialog(SattelitePage.this);
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
-                        File selectedFile = fileChooser.getSelectedFile();
-
-                        String exportFilePath = selectedFile.getAbsolutePath();
-                        if (!exportFilePath.toLowerCase().endsWith(".csv")) {
-                            exportFilePath += ".csv";
-                        }
-
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
-                            writer.write(fileContent);
-                            JOptionPane.showMessageDialog(SattelitePage.this, "Logs exportadas para " + exportFilePath);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                            JOptionPane.showMessageDialog(SattelitePage.this, "Erro ao exportar as logs");
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Logs não encontradas");
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(SattelitePage.this, "Erro! Logs não carregadas");
-            }
+            Kernel.exportLogs("files/logs.csv", name);
         });
 
         exitPage.addActionListener(e -> {
