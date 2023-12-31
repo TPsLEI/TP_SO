@@ -31,9 +31,9 @@ public class GraphPage extends BaseFrame {
         mainPanel.setLayout(new BorderLayout());
 
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Numero de Mensagens por Dia",
+                "Número de Mensagens por Dia",
                 "Dia",
-                "Numero de Mensagens",
+                "Número de Mensagens",
                 createDataset(),
                 PlotOrientation.VERTICAL,
                 false, true, false);
