@@ -5,10 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.*;
+import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -51,51 +56,48 @@ public class GraphPage extends BaseFrame {
     private CategoryDataset createDataset() {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        Map<String, Integer> dayMessageCountMap = readCSVFile("./files/dados.csv");
+        Map<Date, Integer> dayMessageCountMap = readCSVFile("./files/dados.csv");
 
-        for (Map.Entry<String, Integer> entry : dayMessageCountMap.entrySet()) {
-            dataset.addValue(entry.getValue(), "Messages", entry.getKey());
+        for (Map.Entry<Date, Integer> entry : dayMessageCountMap.entrySet()) {
+            dataset.addValue(entry.getValue(), "Messages", formatDate(entry.getKey()));
         }
 
         return dataset;
     }
 
-    private Map<String, Integer> readCSVFile(String filePath) {
-        Map<String, Integer> dayMessageCountMap = new HashMap<>();
+    private Map<Date, Integer> readCSVFile(String filePath) {
+        Map<Date, Integer> dayMessageCountMap = new TreeMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 2) {
-                    String date = parts[0].trim();
-                    String day = extractDay(date);
+                    String dateString = parts[0].trim();
+                    Date date = parseDate(dateString);
 
-                    dayMessageCountMap.put(day, dayMessageCountMap.getOrDefault(day, 0) + 1);
+                    dayMessageCountMap.put(date, dayMessageCountMap.getOrDefault(date, 0) + 1);
                 }
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
 
-        Map<String, Integer> sortedMap = new TreeMap<>(dayMessageCountMap);
-        return sortedMap;
+        return dayMessageCountMap;
     }
 
-    private String extractDay(String dateTime) {
-        String[] dateTimeParts = dateTime.split(" ");
-        if (dateTimeParts.length >= 2) {
-            String dateString = dateTimeParts[0].trim();
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private String formatDate(Date date) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return outputFormat.format(date);
+    }
 
-            try {
-                Date date = inputFormat.parse(dateString);
-                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
-                return outputFormat.format(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+    private Date parseDate(String dateString) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            return inputFormat.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
         }
-        return "";
     }
 }
