@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.nio.file.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class Middleware {
 
@@ -14,6 +17,7 @@ public class Middleware {
     public Middleware(LinkedBlockingQueue<String> dataQueue) {
         this.dataQueue = dataQueue;
         initUI();
+        initMessageListener();
     }
 
     private void initUI() {
@@ -70,5 +74,34 @@ public class Middleware {
 
         frame.setVisible(true);
     }
+
+    private void initMessageListener() {
+        Path filePath = Paths.get("files/dados.csv");
+
+        Thread messageListenerThread = new Thread(() -> {
+            try {
+                WatchService watchService = FileSystems.getDefault().newWatchService();
+                filePath.getParent().register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+
+                while (true) {
+                    WatchKey key = watchService.take();
+
+                    for (WatchEvent<?> event : key.pollEvents()) {
+                        if (event.context().toString().equals(filePath.getFileName().toString())) {
+                            System.out.println("Mensagem recebida!");
+                        }
+                    }
+
+                    key.reset();
+                }
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        messageListenerThread.setDaemon(true);
+        messageListenerThread.start();
+    }
+    
 
 }
