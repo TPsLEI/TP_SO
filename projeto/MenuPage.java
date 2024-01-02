@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class MenuPage extends BaseFrame {
     LinkedBlockingQueue<String> dataQueue = new LinkedBlockingQueue<>();
 
-    public MenuPage(String name) {
+    public MenuPage(Estacao estacao) {
         super("Menu");
         setSize(450, 170);
         setResizable(false);
@@ -18,8 +18,8 @@ public class MenuPage extends BaseFrame {
         accessSatelliteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Logs.log("O Utilizador " + name + " acedeu ao satélite.");
-                SattelitePage sattelitePage = new SattelitePage(name);
+                MEM.log("O Utilizador " + estacao.name + " acedeu ao satélite.");
+                SattelitePage sattelitePage = new SattelitePage(estacao.name);
                 sattelitePage.setVisible(true);
             }
         });
@@ -29,14 +29,14 @@ public class MenuPage extends BaseFrame {
             public void actionPerformed(ActionEvent e) {
                 Middleware middleware = new Middleware(dataQueue);
                 MEM mem = new MEM("dados.csv");
-                CPU thread = new CPU(dataQueue, mem, name);
+                CPU thread = new CPU(dataQueue, mem, estacao.name);
                 thread.start();
             }
         });
 
         setLayout(new BorderLayout());
 
-        JLabel instructionLabel = new JLabel("Bem-vindo " + name);
+        JLabel instructionLabel = new JLabel("Bem-vindo " + estacao.name);
         instructionLabel.setHorizontalAlignment(JLabel.LEFT);
         instructionLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 0, 0));
         instructionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -53,12 +53,6 @@ public class MenuPage extends BaseFrame {
         buttonBox.add(Box.createVerticalGlue());
 
         add(buttonBox, BorderLayout.CENTER);
-
-        // Middleware middleware = new Middleware(dataQueue);
-
-        // MEM mem = new MEM("dados.csv");
-        // CPU thread = new CPU(dataQueue, mem);
-        // thread.start();
     }
 
 }

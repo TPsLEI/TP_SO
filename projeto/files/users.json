@@ -9,5 +9,11 @@
         "name": "Miguel",
         "username": "K0baCK",
         "password": "Scan2gogo"
+    },
+    
+    "3": {
+        "name": "Teste",
+        "username": "teste",
+        "password": "teste"
     }
 }

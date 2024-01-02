@@ -66,7 +66,7 @@ public class SattelitePage extends BaseFrame {
         deleteBox.addActionListener(e -> {
             textBox.setText("");
             JOptionPane.showMessageDialog(SattelitePage.this, "Consola limpa com sucesso...");
-            Logs.log("O Utilizador " + name + " limpou as mensagens.");
+            MEM.log("O Utilizador " + name + " limpou as mensagens.");
         });
 
         exportMessages.addActionListener(e -> {
@@ -76,13 +76,13 @@ public class SattelitePage extends BaseFrame {
         seeGraph.addActionListener(e -> {
             GraphPage graphPage = new GraphPage();
             graphPage.setVisible(true);
-            Logs.log("O Utilizador " + name + " acedeu ao gráfico.");
+            MEM.log("O Utilizador " + name + " acedeu ao gráfico.");
         });
 
         seeLogs.addActionListener(e -> {
             LogsPage logsPage = new LogsPage();
             logsPage.setVisible(true);
-            Logs.log("O Utilizador " + name + " acedeu às logs.");
+            MEM.log("O Utilizador " + name + " acedeu às logs.");
         });
 
         exportLogs.addActionListener(e -> {
@@ -91,7 +91,7 @@ public class SattelitePage extends BaseFrame {
 
         exitPage.addActionListener(e -> {
             dispose();
-            Logs.log("O Utilizador " + name + " desconectou-se do satélite.");
+            MEM.log("O Utilizador " + name + " desconectou-se do satélite.");
         });
 
         add(mainPanel);

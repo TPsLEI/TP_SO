@@ -37,11 +37,14 @@ public class Kernel {
                         String storedPassword = userData.getString("password");
     
                         if (password.equals(storedPassword)) {
-                            String name = userData.getString("name");
+                            Estacao estacao = new Estacao();
+                            estacao.name = userData.getString("name");
+                            estacao.username = userData.getString("username");
+                            estacao.password = userData.getString("password");
     
-                            Logs.log("O Utilizador " + name + " autenticou-se.");
+                            MEM.log("O Utilizador " + estacao.name + " autenticou-se.");
     
-                            MenuPage page = new MenuPage(name);
+                            MenuPage page = new MenuPage(estacao);
     
                             page.addWindowListener(new java.awt.event.WindowAdapter() {
                                 @Override
@@ -89,7 +92,7 @@ public class Kernel {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
                         writer.write(fileContent);
                         JOptionPane.showMessageDialog(null, "Mensagens exportadas para " + exportFilePath);
-                        Logs.log("O Utilizador " + name + " exportou as mensagens.");
+                        MEM.log("O Utilizador " + name + " exportou as mensagens.");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Erro ao exportar as mensagens");
@@ -126,7 +129,7 @@ public class Kernel {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(exportFilePath))) {
                         writer.write(fileContent);
                         JOptionPane.showMessageDialog(null, "Logs exportadas para " + exportFilePath);
-                        Logs.log("O Utilizador " + name + " exportou as mensagens.");
+                        MEM.log("O Utilizador " + name + " exportou as mensagens.");
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         JOptionPane.showMessageDialog(null, "Erro ao exportar as logs");

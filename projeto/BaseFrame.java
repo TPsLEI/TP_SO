@@ -23,21 +23,6 @@ public class BaseFrame extends JFrame {
         setTitle(title);
     }
 
-    private void addLogo() {
-        try {
-            ImageIcon logoIcon = new ImageIcon(getClass().getResource("logo/logo.png"));
-
-            JLabel logoLabel = new JLabel(logoIcon);
-            logoLabel.setHorizontalAlignment(JLabel.CENTER);
-
-            add(logoLabel, BorderLayout.NORTH);
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading logo: " + e.getMessage(), "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void setApplicationIcon() {
         try {
             BufferedImage logoImage = ImageIO.read(getClass().getResource("logo/logo.png"));
