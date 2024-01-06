@@ -40,6 +40,10 @@ Tópicos:
 	- Colocar as cenas que não metemos mas que foi pedido (relatório)
 	
 	- EM PDF (relatório)
+	 
+	- o middleware é que tem de comunicar com o sistema operativo se não levamos no pelo
+	  simular uma race condition a aplicação das tecnicas de sincronização tem de ter 
+	  uma justificação pois também há probelmas nesse uso
 
 
 
