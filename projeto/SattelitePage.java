@@ -7,127 +7,156 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
+import javax.imageio.ImageIO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.ui.FlatRoundBorder;
 
-public class SattelitePage extends BaseFrame {
+import net.miginfocom.swing.MigLayout;
 
+public class SattelitePage extends JFrame {
     private JTextArea textBox;
+    private JButton exportMessages;
+    private JButton seeGraph;
+    private JButton seeLogs;
+    private JButton exportLogs;
+    private JButton exitPage;
 
-    public SattelitePage(String name) {
-        super("Satélite");
-        setSize(960, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public SattelitePage(Estacao estacao) {
+        setTitle("Satélite");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(1200, 700));
+        setLocationRelativeTo(null);
+        Kernel.setApplicationIcon(this);
+        setResizable(false);
+        initSattelite(estacao);
+    }
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+    private void initSattelite(Estacao estacao) {
+        setLayout(new MigLayout("fill,insets 20", "[center]", "[center]"));
 
         textBox = new JTextArea();
-        textBox.setPreferredSize(new Dimension(650, 200));
-        textBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
-        textBox.setBackground(Color.BLACK);
-        textBox.setForeground(Color.WHITE);
+        exportMessages = new JButton("Exportar Mensagens");
+        seeGraph = new JButton("Ver gráfico");
+        seeLogs = new JButton("Ver Logs");
+        exportLogs = new JButton("Exportar Logs");
+        exitPage = new JButton("Voltar");
+
+        Kernel.updateTextBoxPeriodically(textBox);
+
+        JPanel panel = new JPanel(new MigLayout("wrap 3, fillx, insets 35 45 30 45", "[fill,250:280][fill,250:280][fill,250:280]"));
+
+        Color darkerBackground = new Color(38, 37, 38);
+        String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(),
+                darkerBackground.getGreen(), darkerBackground.getBlue());
+
+        Color black = new Color(15,15,15);
+
+        panel.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:20;" +
+                "[light]background:darken(@background,3%);" +
+                "[dark]background:" + darkerBackgroundStyle + ";");
+     
+        textBox.setBorder(new FlatRoundBorder());
+        textBox.setBackground(black);
         textBox.setEditable(false);
 
-        updateTextBoxPeriodically();
+        Color lighterBackground = new Color(55, 53, 55);
+        String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(),
+                lighterBackground.getGreen(), lighterBackground.getBlue());
 
-        JButton deleteBox = new JButton("Limpar Consola");
-        JButton exportMessages = new JButton("Exportar Mensagens");
-        JButton seeGraph = new JButton("Ver gráfico");
 
-        JButton seeLogs = new JButton("Ver Logs");
-        JButton exportLogs = new JButton("Exportar Logs");
-        JButton exitPage = new JButton("Voltar");
+        exportMessages.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
-        int buttonHeight = 20;
-        seeLogs.setPreferredSize(new Dimension(150, buttonHeight));
-        exportLogs.setPreferredSize(new Dimension(150, buttonHeight));
-        exitPage.setPreferredSize(new Dimension(150, buttonHeight));
+        seeGraph.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
-        deleteBox.setPreferredSize(new Dimension(150, buttonHeight));
-        exportMessages.setPreferredSize(new Dimension(150, buttonHeight));
-        seeGraph.setPreferredSize(new Dimension(150, buttonHeight));
+        seeLogs.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 25, 10, 0));
-        buttonPanel.add(seeLogs);
-        buttonPanel.add(exportLogs);
-        buttonPanel.add(exitPage);
+        exportLogs.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
-        JPanel messagePanel = new JPanel();
-        messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
-        messagePanel.add(deleteBox);
-        messagePanel.add(exportMessages);
-        messagePanel.add(seeGraph);
-
-        mainPanel.add(textBox, BorderLayout.WEST);
-        mainPanel.add(messagePanel, BorderLayout.CENTER);
-        mainPanel.add(buttonPanel, BorderLayout.PAGE_END);
-
-        deleteBox.addActionListener(e -> {
-            textBox.setText("");
-            JOptionPane.showMessageDialog(SattelitePage.this, "Consola limpa com sucesso...");
-            MEM.log("O Utilizador " + name + " limpou as mensagens.");
-        });
+        exitPage.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
         exportMessages.addActionListener(e -> {
-            Kernel.exportMessages("files/dados.csv", name);
+            Kernel.exportMessages("files/dados.csv", estacao.name);
         });
 
         seeGraph.addActionListener(e -> {
             GraphPage graphPage = new GraphPage();
             graphPage.setVisible(true);
-            MEM.log("O Utilizador " + name + " acedeu ao gráfico.");
+            MEM.log("O Utilizador " + estacao.name + " acedeu ao gráfico.");
         });
 
         seeLogs.addActionListener(e -> {
             LogsPage logsPage = new LogsPage();
             logsPage.setVisible(true);
-            MEM.log("O Utilizador " + name + " acedeu às logs.");
+            MEM.log("O Utilizador " + estacao.name + " acedeu às logs.");
         });
 
         exportLogs.addActionListener(e -> {
-            Kernel.exportLogs("files/logs.csv", name);
+            Kernel.exportLogs("files/logs.csv", estacao.name);
         });
 
         exitPage.addActionListener(e -> {
-            dispose();
-            MEM.log("O Utilizador " + name + " desconectou-se do satélite.");
+            MEM.log("O Utilizador " + estacao.name + " desconectou-se do satélite.");
+            UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
+            UIManager.put("TitlePane.unifiedBackground", false);
+
+            Color Background = new Color(30, 29, 30);
+
+            UIManager.put("Panel.background", Background);
+
+            FlatDarkLaf.setup();
+            MenuPage page = new MenuPage(estacao);
+
+            page.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowOpened(java.awt.event.WindowEvent windowEvent) {
+                    SattelitePage.this.dispose();
+                }
+            });
+
+            page.setVisible(true);
         });
 
-        add(mainPanel);
-    }
-
-    private void updateTextBoxPeriodically() {
-        SwingWorker<Void, String> worker = new SwingWorker<>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                while (!isCancelled()) {
-                    try (InputStream inputStream = SattelitePage.class.getClassLoader()
-                            .getResourceAsStream("files/dados.csv")) {
-                        if (inputStream != null) {
-                            byte[] bytes = inputStream.readAllBytes();
-                            String fileContent = new String(bytes, StandardCharsets.UTF_8);
-                            publish(fileContent);
-                        } else {
-                            publish("Erro! Mensagens não encontradas");
-                        }
-                    } catch (IOException e) {
-                        publish("Erro! Mensagens não carregadas");
-                    }
-
-                    TimeUnit.SECONDS.sleep(5);
-                }
-                return null;
-            }
-
-            @Override
-            protected void process(java.util.List<String> chunks) {
-                for (String chunk : chunks) {
-                    textBox.setText(chunk);
-                }
-            }
-        };
-
-        worker.execute();
+        panel.add(textBox, "span, grow, push, wrap");
+        panel.add(seeGraph, "grow, push");
+        panel.add(exportMessages, "grow, push");
+        panel.add(exitPage, "grow, push");
+        panel.add(seeLogs, "grow, push");
+        panel.add(exportLogs, "grow, push");
+        
+        add(panel);
     }
 }

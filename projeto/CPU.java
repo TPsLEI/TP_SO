@@ -21,11 +21,6 @@ public class CPU extends Thread {
             try {
                 String message = dataQueue.take();
 
-                if ("stop".equals(message)) {
-                    System.out.println("Programa encerrado.");
-                    break;
-                }
-
                 LocalDateTime timestamp = LocalDateTime.now();
                 String formattedTimestamp = timestamp.format(formatter);
                 String formattedMessage = formattedTimestamp + " , De: " + userName + " , \"" + message + "\"";

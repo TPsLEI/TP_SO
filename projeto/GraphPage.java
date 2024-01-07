@@ -5,15 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.*;
-import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -22,8 +16,11 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.RectangleInsets;
 
 public class GraphPage extends BaseFrame {
 
@@ -43,14 +40,50 @@ public class GraphPage extends BaseFrame {
                 PlotOrientation.VERTICAL,
                 false, true, false);
 
+        customizeDarkMode(barChart); 
+        customizeTextColors(barChart); 
+
         CategoryPlot plot = (CategoryPlot) barChart.getPlot();
         NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
         yAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+        CategoryAxis xAxis = (CategoryAxis) plot.getDomainAxis();
+        customizeAxis(xAxis);
+
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        customizeRenderer(renderer);
 
         ChartPanel chartPanel = new ChartPanel(barChart);
         mainPanel.add(chartPanel, BorderLayout.CENTER);
 
         setContentPane(mainPanel);
+    }
+
+    private void customizeTextColors(JFreeChart chart) {
+        chart.getTitle().setPaint(new Color(223, 225, 230)); 
+        chart.getCategoryPlot().getDomainAxis().setLabelPaint(new Color(223, 225, 230)); 
+        chart.getCategoryPlot().getRangeAxis().setLabelPaint(new Color(223, 225, 230)); 
+    }
+
+    private void customizeDarkMode(JFreeChart chart) {
+        chart.setBackgroundPaint(new Color(38, 37, 38)); 
+    
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        plot.setBackgroundPaint(new Color(38, 37, 38)); 
+        plot.setDomainGridlinePaint(new Color(223, 225, 230)); 
+        plot.setRangeGridlinePaint(new Color(223, 225, 230)); 
+    
+        NumberAxis yAxis = (NumberAxis) plot.getRangeAxis();
+        yAxis.setLabelPaint(new Color(223, 225, 230)); 
+        yAxis.setTickLabelPaint(new Color(223, 225, 230)); 
+    }
+
+    private void customizeRenderer(BarRenderer renderer) {
+        renderer.setSeriesPaint(0, new Color(121, 124, 130)); // Bar color
+    }
+
+    private void customizeAxis(CategoryAxis axis) {
+        axis.setTickLabelPaint(new Color(223, 225, 230)); 
     }
 
     private CategoryDataset createDataset() {

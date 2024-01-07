@@ -23,20 +23,24 @@ public class Login extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(1200, 700));
         setLocationRelativeTo(null);
-        setApplicationIcon();
+        Kernel.setApplicationIcon(this);
         setResizable(false);
         initForm();
     }
 
     private void initForm() {
         setLayout(new MigLayout("fill,insets 20", "[center]", "[center]"));
+
         usernameField = new JTextField();
         passwordField = new JPasswordField();
         loginButton = new JButton("Login");
+
         JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
+        
         Color darkerBackground = new Color(38, 37, 38);
         String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(),
                 darkerBackground.getGreen(), darkerBackground.getBlue());
+
         panel.putClientProperty(FlatClientProperties.STYLE, "" +
                 "arc:20;" +
                 "[light]background:darken(@background,3%);" +
@@ -68,6 +72,7 @@ public class Login extends JFrame implements ActionListener {
 
         JLabel lbTitle = new JLabel("Bem-vindo de volta!");
         JLabel description = new JLabel("Efetue o Login para aceder ao satélite.");
+
         lbTitle.putClientProperty(FlatClientProperties.STYLE, "" +
                 "font:bold +10");
         description.putClientProperty(FlatClientProperties.STYLE, "" +
@@ -82,6 +87,7 @@ public class Login extends JFrame implements ActionListener {
                 }
             }
         });
+
         panel.add(lbTitle);
         panel.add(description);
         panel.add(new JLabel("Username"), "gapy 8");
@@ -90,6 +96,7 @@ public class Login extends JFrame implements ActionListener {
         panel.add(passwordField);
         panel.add(loginButton, "gapy 10");
         loginButton.addActionListener(this);
+        
         add(panel);
     }
 
@@ -99,16 +106,6 @@ public class Login extends JFrame implements ActionListener {
             String passValue = passwordField.getText();
 
             Kernel.handleLogin(userValue, passValue, this);
-        }
-    }
-
-    private void setApplicationIcon() {
-        try {
-            BufferedImage logoImage = ImageIO.read(getClass().getResource("logo/logo.png"));
-
-            setIconImage(logoImage);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

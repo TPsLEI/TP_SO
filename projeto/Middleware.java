@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import java.awt.*;
 import java.nio.file.*;
 import java.awt.event.ActionEvent;
@@ -10,69 +13,24 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class Middleware {
+    public static LinkedBlockingQueue<String> dataQueue;
 
-    private JTextField textField;
-    private LinkedBlockingQueue<String> dataQueue;
-
-    public Middleware(LinkedBlockingQueue<String> dataQueue) {
-        this.dataQueue = dataQueue;
-        initUI();
+    public Middleware(LinkedBlockingQueue<String> dataQueue, Estacao estacao) {
+        Middleware.dataQueue = dataQueue;
+        init(estacao);
         initMessageListener();
     }
 
-    private void initUI() {
-        MessagePage frame = new MessagePage();
-        frame.setSize(400, 200);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    private void init(Estacao estacao) {
+        UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
+        UIManager.put("TitlePane.unifiedBackground", false);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        Color darkerBackground = new Color(30, 29, 30);
 
-        JLabel label = new JLabel("Introduzir a Mensagem:");
-        panel.add(label, BorderLayout.NORTH);
+        UIManager.put("Panel.background", darkerBackground);
 
-        textField = new JTextField();
-        panel.add(textField, BorderLayout.CENTER);
-
-        JButton sendButton = new JButton("Enviar Mensagem");
-        JButton voltarButton = new JButton("Voltar");
-
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.add(sendButton);
-        buttonPanel.add(voltarButton);
-
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        frame.add(panel);
-
-        textField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    sendButton.doClick();
-                }
-            }
-        });
-
-        sendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String message = textField.getText();
-                dataQueue.offer(message);
-                textField.setText("");
-            }
-        });
-
-        voltarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-            }
-        });
-
-        frame.setVisible(true);
+        FlatDarkLaf.setup();
+        EventQueue.invokeLater(() -> new MessagePage(estacao).setVisible(true));
     }
 
     private void initMessageListener() {
@@ -101,6 +59,10 @@ public class Middleware {
 
         messageListenerThread.setDaemon(true);
         messageListenerThread.start();
+    }
+
+    public static void handleMessage(String message, MessagePage messagePage) {
+        dataQueue.offer(message);
     }
     
 

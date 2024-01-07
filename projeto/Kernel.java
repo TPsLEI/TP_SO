@@ -4,12 +4,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
+import java.util.concurrent.TimeUnit;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import org.json.JSONObject;
 import javax.swing.*;
 import java.awt.*;
 import com.formdev.flatlaf.*;
-
 import net.miginfocom.swing.MigLayout;
 
 public class Kernel {
@@ -157,6 +158,49 @@ public class Kernel {
         } catch (IOException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro! Logs não carregadas");
+        }
+    }
+
+    public static void updateTextBoxPeriodically(JTextArea textBox) {
+        SwingWorker<Void, String> worker = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                while (!isCancelled()) {
+                    try (InputStream inputStream = Kernel.class.getClassLoader()
+                            .getResourceAsStream("files/dados.csv")) {
+                        if (inputStream != null) {
+                            byte[] bytes = inputStream.readAllBytes();
+                            String fileContent = new String(bytes, StandardCharsets.UTF_8);
+                            publish(fileContent);
+                        } else {
+                            publish("Erro! Mensagens não encontradas");
+                        }
+                    } catch (IOException e) {
+                        publish("Erro! Mensagens não carregadas");
+                    }
+
+                    TimeUnit.SECONDS.sleep(5);
+                }
+                return null;
+            }
+
+            @Override
+            protected void process(java.util.List<String> chunks) {
+                for (String chunk : chunks) {
+                    textBox.setText(chunk);
+                }
+            }
+        };
+
+        worker.execute();
+    }
+
+    public static void setApplicationIcon(JFrame frame) {
+        try {
+            BufferedImage logoImage = ImageIO.read(Kernel.class.getResource("logo/logo.png"));
+            frame.setIconImage(logoImage);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
