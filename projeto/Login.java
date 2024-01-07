@@ -1,3 +1,4 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,30 +8,69 @@ import java.io.InputStream;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.FlatClientProperties;
+import net.miginfocom.swing.MigLayout;
 
-public class Login extends BaseFrame implements ActionListener {
+public class Login extends JFrame implements ActionListener {
     private JButton loginButton;
-    private JLabel userLabel, passLabel;
     private JTextField usernameField;
     private JPasswordField passwordField;
 
     public Login() {
-        super("Login");
+        setTitle("Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(1200, 700));
+        setLocationRelativeTo(null);
+        setApplicationIcon();
+        setResizable(false);
+        initForm();
+    }
 
-        System.setProperty("substance.laf.decorations", "true");
-        System.setProperty("substance.laf.componentFocusKind", "NONE");
-        System.setProperty("substance.laf.skin", "org.pushingpixels.substance.api.skin.SubstanceRavenLookAndFeel");
-        System.setProperty("substance.laf.theme", "org.pushingpixels.substance.api.skin.SubstanceLightTheme");
+    private void initForm() {
+        setLayout(new MigLayout("fill,insets 20", "[center]", "[center]"));
+        usernameField = new JTextField();
+        passwordField = new JPasswordField();
+        loginButton = new JButton("Login");
+        JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
+        Color darkerBackground = new Color(38,37,38);
+        String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(), darkerBackground.getGreen(), darkerBackground.getBlue());
+        panel.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:20;" +
+                "[light]background:darken(@background,3%);" +
+                "[dark]background:" + darkerBackgroundStyle + ";");
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2, 10, 10));
+        usernameField.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:5;" +
+                "[light]background:darken(@background,3%);" +
+                "[dark]background:" + darkerBackgroundStyle + ";");
 
-        userLabel = new JLabel("Username");
-        usernameField = new JTextField(15);
-        passLabel = new JLabel("Password");
-        passwordField = new JPasswordField(15);
+        passwordField.putClientProperty(FlatClientProperties.STYLE, "" +
+                "showRevealButton:true;" +
+                "arc:5;" + 
+                "[dark]background:" + darkerBackgroundStyle + ";");
 
-        usernameField.addActionListener(this);
+        Color lighterBackground = new Color(55,53,55);
+        String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(), lighterBackground.getGreen(), lighterBackground.getBlue());
+
+        loginButton.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
+
+        usernameField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "");
+        passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "");
+
+        JLabel lbTitle = new JLabel("Bem-vindo de volta!");
+        JLabel description = new JLabel("Efetue o Login para aceder à sua conta.");
+        lbTitle.putClientProperty(FlatClientProperties.STYLE, "" +
+                "font:bold +10");
+        description.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]foreground:lighten(@foreground,30%);" +
+                "[dark]foreground:darken(@foreground,30%)");
 
         passwordField.addKeyListener(new KeyAdapter() {
             @Override
@@ -40,34 +80,33 @@ public class Login extends BaseFrame implements ActionListener {
                 }
             }
         });
-
-        panel.add(userLabel);
+        panel.add(lbTitle);
+        panel.add(description);
+        panel.add(new JLabel("Username"), "gapy 8");
         panel.add(usernameField);
-        panel.add(passLabel);
+        panel.add(new JLabel("Password"), "gapy 8");
         panel.add(passwordField);
-
-        loginButton = new JButton("Login");
-        loginButton.setBackground(new Color(30, 144, 255));
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setFocusPainted(false);
-
-        add(panel, BorderLayout.CENTER);
-        add(loginButton, BorderLayout.SOUTH);
-
-        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
+        panel.add(loginButton, "gapy 10");
         loginButton.addActionListener(this);
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+        add(panel);
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == loginButton) {
             String userValue = usernameField.getText();
             String passValue = passwordField.getText();
-    
+
             Kernel.handleLogin(userValue, passValue, this);
+        }
+    }
+
+    private void setApplicationIcon() {
+        try {
+            BufferedImage logoImage = ImageIO.read(getClass().getResource("logo/logo.png"));
+
+            setIconImage(logoImage);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

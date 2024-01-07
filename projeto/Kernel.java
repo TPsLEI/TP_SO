@@ -7,14 +7,24 @@ import java.nio.charset.StandardCharsets;
 
 import org.json.JSONObject;
 import javax.swing.*;
+import java.awt.*;
+import com.formdev.flatlaf.*;
+
+import net.miginfocom.swing.MigLayout;
 
 public class Kernel {
     public static void main(String[] args) {
 
-        SwingUtilities.invokeLater(() -> {
-            Login loginForm = new Login();
-            loginForm.setVisible(true);
-        });
+        UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
+        UIManager.put("TitlePane.unifiedBackground", false);
+
+        Color darkerBackground = new Color(30,29,30);
+
+        UIManager.put("Panel.background", darkerBackground);
+
+
+        FlatDarkLaf.setup();
+        EventQueue.invokeLater(() -> new Login().setVisible(true));
 
     }
 
