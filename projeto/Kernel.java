@@ -18,10 +18,9 @@ public class Kernel {
         UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
         UIManager.put("TitlePane.unifiedBackground", false);
 
-        Color darkerBackground = new Color(30,29,30);
+        Color darkerBackground = new Color(30, 29, 30);
 
         UIManager.put("Panel.background", darkerBackground);
-
 
         FlatDarkLaf.setup();
         EventQueue.invokeLater(() -> new Login().setVisible(true));
@@ -30,39 +29,46 @@ public class Kernel {
 
     public static void handleLogin(String username, String password, Login loginPage) {
         boolean userFound = false;
-    
+
         try {
             InputStream inputStream = Kernel.class.getClassLoader()
                     .getResourceAsStream("files/users.json");
             if (inputStream != null) {
                 String jsonContent = new String(inputStream.readAllBytes());
                 JSONObject json = new JSONObject(jsonContent);
-    
+
                 for (String key : json.keySet()) {
                     JSONObject userData = json.getJSONObject(key);
                     String storedUsername = userData.getString("username");
-    
+
                     if (storedUsername.equals(username)) {
                         userFound = true;
                         String storedPassword = userData.getString("password");
-    
+
                         if (password.equals(storedPassword)) {
                             Estacao estacao = new Estacao();
                             estacao.name = userData.getString("name");
                             estacao.username = userData.getString("username");
                             estacao.password = userData.getString("password");
-    
+
                             MEM.log("O Utilizador " + estacao.name + " autenticou-se.");
-    
+                            UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
+                            UIManager.put("TitlePane.unifiedBackground", false);
+
+                            Color darkerBackground = new Color(30, 29, 30);
+
+                            UIManager.put("Panel.background", darkerBackground);
+
+                            FlatDarkLaf.setup();
                             MenuPage page = new MenuPage(estacao);
-    
+
                             page.addWindowListener(new java.awt.event.WindowAdapter() {
                                 @Override
                                 public void windowOpened(java.awt.event.WindowEvent windowEvent) {
                                     loginPage.dispose();
                                 }
                             });
-    
+
                             page.setVisible(true);
                         } else {
                             System.out.println("Password errada. Por favor, tente novamente.");
@@ -71,7 +77,7 @@ public class Kernel {
                     }
                 }
             }
-    
+
             if (!userFound) {
                 System.out.println("Utilizador não encontrado. Por favor, tente novamente.");
             }

@@ -34,8 +34,9 @@ public class Login extends JFrame implements ActionListener {
         passwordField = new JPasswordField();
         loginButton = new JButton("Login");
         JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
-        Color darkerBackground = new Color(38,37,38);
-        String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(), darkerBackground.getGreen(), darkerBackground.getBlue());
+        Color darkerBackground = new Color(38, 37, 38);
+        String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(),
+                darkerBackground.getGreen(), darkerBackground.getBlue());
         panel.putClientProperty(FlatClientProperties.STYLE, "" +
                 "arc:20;" +
                 "[light]background:darken(@background,3%);" +
@@ -48,11 +49,12 @@ public class Login extends JFrame implements ActionListener {
 
         passwordField.putClientProperty(FlatClientProperties.STYLE, "" +
                 "showRevealButton:true;" +
-                "arc:5;" + 
+                "arc:5;" +
                 "[dark]background:" + darkerBackgroundStyle + ";");
 
-        Color lighterBackground = new Color(55,53,55);
-        String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(), lighterBackground.getGreen(), lighterBackground.getBlue());
+        Color lighterBackground = new Color(55, 53, 55);
+        String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(),
+                lighterBackground.getGreen(), lighterBackground.getBlue());
 
         loginButton.putClientProperty(FlatClientProperties.STYLE, "" +
                 "[light]background:darken(@background,10%);" +
@@ -65,7 +67,7 @@ public class Login extends JFrame implements ActionListener {
         passwordField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "");
 
         JLabel lbTitle = new JLabel("Bem-vindo de volta!");
-        JLabel description = new JLabel("Efetue o Login para aceder à sua conta.");
+        JLabel description = new JLabel("Efetue o Login para aceder ao satélite.");
         lbTitle.putClientProperty(FlatClientProperties.STYLE, "" +
                 "font:bold +10");
         description.putClientProperty(FlatClientProperties.STYLE, "" +

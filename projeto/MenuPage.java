@@ -3,17 +3,62 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.LinkedBlockingQueue;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.FlatClientProperties;
+import net.miginfocom.swing.MigLayout;
 
-public class MenuPage extends BaseFrame {
+public class MenuPage extends JFrame {
     LinkedBlockingQueue<String> dataQueue = new LinkedBlockingQueue<>();
 
-    public MenuPage(Estacao estacao) {
-        super("Menu");
-        setSize(450, 170);
-        setResizable(false);
+    private JButton accessSatelliteButton;
+    private JButton sendMessageButton;
 
-        JButton accessSatelliteButton = new JButton("Aceder ao Satélite");
-        JButton sendMessageButton = new JButton("Enviar Mensagem");
+    public MenuPage(Estacao estacao) {
+        setTitle("Menu");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(1200, 700));
+        setLocationRelativeTo(null);
+        setApplicationIcon();
+        setResizable(false);
+        initMenu(estacao);
+    }
+
+    private void initMenu(Estacao estacao) {
+        setLayout(new MigLayout("fill,insets 20", "[center]", "[center]"));
+        accessSatelliteButton = new JButton("Aceder ao Satélite");
+        sendMessageButton = new JButton("Enviar Mensagem");
+        JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
+        Color darkerBackground = new Color(38, 37, 38);
+        String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(),
+                darkerBackground.getGreen(), darkerBackground.getBlue());
+        panel.putClientProperty(FlatClientProperties.STYLE, "" +
+                "arc:20;" +
+                "[light]background:darken(@background,3%);" +
+                "[dark]background:" + darkerBackgroundStyle + ";");
+        Color lighterBackground = new Color(55, 53, 55);
+        String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(),
+                lighterBackground.getGreen(), lighterBackground.getBlue());
+
+        accessSatelliteButton.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
+
+        sendMessageButton.putClientProperty(FlatClientProperties.STYLE, "" +
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
         accessSatelliteButton.addActionListener(new ActionListener() {
             @Override
@@ -34,25 +79,23 @@ public class MenuPage extends BaseFrame {
             }
         });
 
-        setLayout(new BorderLayout());
+        JLabel lbTitle = new JLabel("Bem-vindo " + estacao.name);
+        lbTitle.putClientProperty(FlatClientProperties.STYLE, "" +
+                "font:bold +10");
 
-        JLabel instructionLabel = new JLabel("Bem-vindo " + estacao.name);
-        instructionLabel.setHorizontalAlignment(JLabel.LEFT);
-        instructionLabel.setBorder(BorderFactory.createEmptyBorder(15, 15, 0, 0));
-        instructionLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        add(instructionLabel, BorderLayout.NORTH);
-
-        Box buttonBox = Box.createVerticalBox();
-        buttonBox.add(Box.createVerticalGlue());
-
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.add(accessSatelliteButton);
-        buttonPanel.add(sendMessageButton);
-
-        buttonBox.add(buttonPanel);
-        buttonBox.add(Box.createVerticalGlue());
-
-        add(buttonBox, BorderLayout.CENTER);
+        panel.add(lbTitle);
+        panel.add(accessSatelliteButton, "gapy 10");
+        panel.add(sendMessageButton, "gapy 3");
+        add(panel);
     }
 
+    private void setApplicationIcon() {
+        try {
+            BufferedImage logoImage = ImageIO.read(getClass().getResource("logo/logo.png"));
+
+            setIconImage(logoImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
