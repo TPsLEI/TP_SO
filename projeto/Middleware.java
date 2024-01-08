@@ -1,15 +1,8 @@
 import javax.swing.*;
-
 import com.formdev.flatlaf.FlatDarkLaf;
-
 import java.awt.*;
 import java.nio.file.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class Middleware {
@@ -64,6 +57,5 @@ public class Middleware {
     public static void handleMessage(String message, MessagePage messagePage) {
         dataQueue.offer(message);
     }
-    
 
 }

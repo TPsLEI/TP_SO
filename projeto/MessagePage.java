@@ -1,15 +1,10 @@
 import java.util.concurrent.LinkedBlockingQueue;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import com.formdev.flatlaf.*;
 
 import net.miginfocom.swing.MigLayout;
@@ -49,27 +44,27 @@ public class MessagePage extends JFrame implements ActionListener {
                 "[dark]background:" + darkerBackgroundStyle + ";");
 
         textField.putClientProperty(FlatClientProperties.STYLE, "" +
-        "arc:5;" +
-        "[light]background:darken(@background,3%);" +
-        "[dark]background:" + darkerBackgroundStyle + ";");
+                "arc:5;" +
+                "[light]background:darken(@background,3%);" +
+                "[dark]background:" + darkerBackgroundStyle + ";");
 
         Color lighterBackground = new Color(55, 53, 55);
         String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(),
                 lighterBackground.getGreen(), lighterBackground.getBlue());
 
         sendButton.putClientProperty(FlatClientProperties.STYLE, "" +
-        "[light]background:darken(@background,10%);" +
-        "[dark]background:" + lighterBackgroundStyle + ";" +
-        "borderWidth:0;" +
-        "focusWidth:0;" +
-        "innerFocusWidth:0");
-        
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
+
         voltarButton.putClientProperty(FlatClientProperties.STYLE, "" +
-        "[light]background:darken(@background,10%);" +
-        "[dark]background:" + lighterBackgroundStyle + ";" +
-        "borderWidth:0;" +
-        "focusWidth:0;" +
-        "innerFocusWidth:0");
+                "[light]background:darken(@background,10%);" +
+                "[dark]background:" + lighterBackgroundStyle + ";" +
+                "borderWidth:0;" +
+                "focusWidth:0;" +
+                "innerFocusWidth:0");
 
         voltarButton.addActionListener(new ActionListener() {
             @Override
@@ -117,7 +112,7 @@ public class MessagePage extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == sendButton) {
+        if (e.getSource() == sendButton) {
             String message = textField.getText();
             Middleware.handleMessage(message, this);
             textField.setText("");

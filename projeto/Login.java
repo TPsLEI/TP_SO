@@ -1,15 +1,9 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.swing.border.EmptyBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.FlatClientProperties;
 import net.miginfocom.swing.MigLayout;
 
@@ -36,7 +30,7 @@ public class Login extends JFrame implements ActionListener {
         loginButton = new JButton("Login");
 
         JPanel panel = new JPanel(new MigLayout("wrap,fillx,insets 35 45 30 45", "fill,250:280"));
-        
+
         Color darkerBackground = new Color(38, 37, 38);
         String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(),
                 darkerBackground.getGreen(), darkerBackground.getBlue());
@@ -96,7 +90,7 @@ public class Login extends JFrame implements ActionListener {
         panel.add(passwordField);
         panel.add(loginButton, "gapy 10");
         loginButton.addActionListener(this);
-        
+
         add(panel);
     }
 

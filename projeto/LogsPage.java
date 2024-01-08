@@ -1,15 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class LogsPage extends BaseFrame {
-
-    private JTextArea logsTextArea;
-    private JTextField commandTextField;
 
     public LogsPage() {
         super("Logs");

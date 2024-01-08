@@ -1,24 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.concurrent.TimeUnit;
-import javax.imageio.ImageIO;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.ui.FlatRoundBorder;
-
 import net.miginfocom.swing.MigLayout;
 
 public class SattelitePage extends JFrame {
@@ -51,19 +34,20 @@ public class SattelitePage extends JFrame {
 
         Kernel.updateTextBoxPeriodically(textBox);
 
-        JPanel panel = new JPanel(new MigLayout("wrap 3, fillx, insets 35 45 30 45", "[fill,250:280][fill,250:280][fill,250:280]"));
+        JPanel panel = new JPanel(
+                new MigLayout("wrap 3, fillx, insets 35 45 30 45", "[fill,250:280][fill,250:280][fill,250:280]"));
 
         Color darkerBackground = new Color(38, 37, 38);
         String darkerBackgroundStyle = String.format("rgb(%d,%d,%d)", darkerBackground.getRed(),
                 darkerBackground.getGreen(), darkerBackground.getBlue());
 
-        Color black = new Color(15,15,15);
+        Color black = new Color(15, 15, 15);
 
         panel.putClientProperty(FlatClientProperties.STYLE, "" +
                 "arc:20;" +
                 "[light]background:darken(@background,3%);" +
                 "[dark]background:" + darkerBackgroundStyle + ";");
-     
+
         textBox.setBorder(new FlatRoundBorder());
         textBox.setBackground(black);
         textBox.setEditable(false);
@@ -71,7 +55,6 @@ public class SattelitePage extends JFrame {
         Color lighterBackground = new Color(55, 53, 55);
         String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(),
                 lighterBackground.getGreen(), lighterBackground.getBlue());
-
 
         exportMessages.putClientProperty(FlatClientProperties.STYLE, "" +
                 "[light]background:darken(@background,10%);" +
@@ -156,7 +139,7 @@ public class SattelitePage extends JFrame {
         panel.add(exitPage, "grow, push");
         panel.add(seeLogs, "grow, push");
         panel.add(exportLogs, "grow, push");
-        
+
         add(panel);
     }
 }

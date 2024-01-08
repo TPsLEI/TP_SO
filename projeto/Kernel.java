@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import javax.swing.*;
 import java.awt.*;
 import com.formdev.flatlaf.*;
-import net.miginfocom.swing.MigLayout;
 
 public class Kernel {
     public static void main(String[] args) {
