@@ -37,12 +37,6 @@ public class CPU extends Thread {
     }
 
     private void showMessageBox(String message) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Resposta a: " + message + "\nOk, " + userName,
-                    "Resposta do Satélite",
-                    JOptionPane.INFORMATION_MESSAGE);
-        });
+        Kernel.answerMessage(message, userName);
     }
 }

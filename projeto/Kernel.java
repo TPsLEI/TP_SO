@@ -194,6 +194,16 @@ public class Kernel {
         worker.execute();
     }
 
+    public static void answerMessage(String message, String name) {
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Resposta a: " + message + "\nOk, " + name,
+                    "Resposta do Satélite",
+                    JOptionPane.INFORMATION_MESSAGE);
+        });
+    }
+
     public static void setApplicationIcon(JFrame frame) {
         try {
             BufferedImage logoImage = ImageIO.read(Kernel.class.getResource("logo/logo.png"));
