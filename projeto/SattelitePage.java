@@ -50,6 +50,7 @@ public class SattelitePage extends JFrame {
 
         textBox.setBorder(new FlatRoundBorder());
         textBox.setBackground(black);
+        textBox.setPreferredSize(new Dimension(1000, 470));
         textBox.setEditable(false);
 
         Color lighterBackground = new Color(55, 53, 55);
@@ -133,7 +134,8 @@ public class SattelitePage extends JFrame {
             page.setVisible(true);
         });
 
-        panel.add(textBox, "span, grow, push, wrap");
+        JScrollPane scrollPane = new JScrollPane(textBox);
+        panel.add(scrollPane, "span, grow, push, wrap");
         panel.add(seeGraph, "grow, push");
         panel.add(exportMessages, "grow, push");
         panel.add(exitPage, "grow, push");
