@@ -34,7 +34,8 @@ public class LogsPage extends BaseFrame {
             e.printStackTrace();
             textBox.setText("Erro! Mensagens não carregadas");
         }
-        JScrollPane scrollPane = new JScrollPane(textBox);
+        JScrollPane scrollPane = new JScrollPane(textBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         add(mainPanel);

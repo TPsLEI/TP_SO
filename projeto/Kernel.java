@@ -14,8 +14,6 @@ import com.formdev.flatlaf.*;
 
 public class Kernel {
 
-    Thread userThread = new Thread();
-
     public static void main(String[] args) {
 
         UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
