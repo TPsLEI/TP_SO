@@ -14,6 +14,9 @@ public class CPU extends Thread {
         this.userName = userName;
     }
 
+    /*
+     * Thread que fica sempre a correr à espera de uma mensagem na Queue
+     */
     @Override
     public void run() {
         while (true) {

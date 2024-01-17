@@ -134,6 +134,9 @@ public class MessagePage extends JFrame implements ActionListener {
         add(panel);
     }
 
+    /*
+     * Método que envia as mensagens enviadas pelo utilizador para o Middleware
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == sendButton) {
             String message = textField.getText();

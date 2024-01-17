@@ -29,6 +29,9 @@ public class GraphPage extends BaseFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
+        /*
+         * Definição da Base do Gráfico
+         */
         JFreeChart barChart = ChartFactory.createBarChart(
                 "Número de Mensagens por Dia",
                 "Dia",
@@ -95,6 +98,9 @@ public class GraphPage extends BaseFrame {
         return dataset;
     }
 
+    /*
+     * Função para buscar os dados para o gráfico
+     */
     private Map<Date, Integer> readCSVFile(String filePath) {
         Map<Date, Integer> dayMessageCountMap = new TreeMap<>();
 

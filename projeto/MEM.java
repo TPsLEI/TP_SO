@@ -20,6 +20,9 @@ public class MEM {
         this.csvFileName = Paths.get(currentPath, csvFileName).toString();
     }
 
+    /*
+     * Função que escreve as mensagens no ficheiro CSV do sistema
+     */
     public synchronized void writeMessage(String message, String name) {
         CompletableFuture.runAsync(() -> {
             MEM.log("O Utilizador " + name + " enviou uma mensagem.");
@@ -32,6 +35,9 @@ public class MEM {
         });
     }
 
+    /*
+     * Função que escreve as logs do sistema no ficheiro CSV
+     */
     public static synchronized void log(String message) {
         CompletableFuture.runAsync(() -> {
             try {

@@ -94,6 +94,9 @@ public class Login extends JFrame implements ActionListener {
         add(panel);
     }
 
+    /*
+     * Método para enviar a informação do Login para o Kernel
+     */
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == loginButton) {
             String userValue = usernameField.getText();

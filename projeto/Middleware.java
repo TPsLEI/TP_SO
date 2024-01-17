@@ -27,6 +27,9 @@ public class Middleware {
         EventQueue.invokeLater(() -> new MessagePage(estacao).setVisible(true));
     }
 
+    /*
+     * Thread que fica à espera de uma alteração no ficheiro CSV interno das mensagens
+     */
     private void initMessageListener() {
         Path filePath = Paths.get("files/dados.csv");
 
@@ -55,6 +58,9 @@ public class Middleware {
         messageListenerThread.start();
     }
     
+    /*
+     * Recebe as mensagens mandadas pelo utilizador e adiciona à DataQueue
+     */
     public static void handleMessage(List<String> messages, MessagePage messagesPage) {
         dataQueue.addAll(messages);
     }

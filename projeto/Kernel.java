@@ -14,6 +14,9 @@ import com.formdev.flatlaf.*;
 
 public class Kernel {
 
+    /*
+     * Função principal do Projeto, que corre a interface do Login
+     */
     public static void main(String[] args) {
 
         UIManager.put("defaultFont", new Font("Arial", Font.PLAIN, 13));
@@ -28,6 +31,9 @@ public class Kernel {
 
     }
 
+    /*
+     * Função de verificação das credenciais do Formulário
+     */
     public static void handleLogin(String username, String password, Login loginPage) {
         boolean userFound = false;
 
@@ -87,6 +93,9 @@ public class Kernel {
         }
     }
 
+    /*
+     * Função para exportar as Mensagens para um ficheiro CSV
+     */
     public static void exportMessages(String filePath, String name) {
         try (InputStream inputStream = Kernel.class.getClassLoader().getResourceAsStream(filePath)) {
             if (inputStream != null) {
@@ -124,6 +133,9 @@ public class Kernel {
         }
     }
 
+    /*
+     * Função para exportar as Logs do Sistema para um ficheiro CSV
+     */
     public static void exportLogs(String filePath, String name) {
         try (InputStream inputStream = Kernel.class.getClassLoader().getResourceAsStream(filePath)) {
             if (inputStream != null) {
@@ -161,6 +173,9 @@ public class Kernel {
         }
     }
 
+    /*
+     * Função para atualizar a TextBox do Satélite periodicamente
+     */
     public static void updateTextBoxPeriodically(JTextArea textBox) {
         SwingWorker<Void, String> worker = new SwingWorker<>() {
             @Override
@@ -195,6 +210,9 @@ public class Kernel {
         worker.execute();
     }
 
+    /*
+     * Função que responde à mensagem enviada pelo Utilizador
+     */
     public static void answerMessage(String message, String name) {
         javax.swing.SwingUtilities.invokeLater(() -> {
             JOptionPane.showMessageDialog(
