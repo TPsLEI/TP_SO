@@ -32,12 +32,19 @@ public class Middleware {
      */
     private void initMessageListener() {
         Path filePath = Paths.get("files/dados.csv");
-
+  
         Thread messageListenerThread = new Thread(() -> {
             try {
+
+                /*
+                * Cria um WatchService que fica à espera de uma alteração no ficheiro
+                */
                 WatchService watchService = FileSystems.getDefault().newWatchService();
                 filePath.getParent().register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
 
+                /*
+                * Caso haja alguma alteração, o sistema avisa no terminal de uma Mensagem Recebida
+                */
                 while (true) {
                     WatchKey key = watchService.take();
 

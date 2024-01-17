@@ -21,14 +21,27 @@ public class CPU extends Thread {
     public void run() {
         while (true) {
             try {
+                /*
+                 * Guarda numa variável a primeira mensagem da DataQueue
+                 */
                 String message = dataQueue.take();
 
+                /*
+                 * Guarda as informações sobre o Data e Hora
+                 */
                 LocalDateTime timestamp = LocalDateTime.now();
+
+                /*
+                 * Formata a Data e Hora e a Mensagem guardada no ficheiro CSV
+                 */
                 String formattedTimestamp = timestamp.format(formatter);
                 String formattedMessage = formattedTimestamp + " , De: " + userName + " , \"" + message + "\"";
 
                 mem.writeMessage(formattedMessage, userName);
 
+                /*
+                 * A Thread descansa durante 3 segundos antes de ficar a espera de outra mensagem na DataQueue
+                 */
                 Thread.sleep(3000);
 
                 showMessageBox(message);
@@ -38,6 +51,9 @@ public class CPU extends Thread {
         }
     }
 
+    /*
+     * Envia uma resposta do Satélite, numa MessageBox
+     */
     private void showMessageBox(String message) {
         Kernel.answerMessage(message, userName);
     }

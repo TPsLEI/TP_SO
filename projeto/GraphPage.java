@@ -99,7 +99,7 @@ public class GraphPage extends BaseFrame {
     }
 
     /*
-     * Função para buscar os dados para o gráfico
+     * Função para ir buscar os dados para o gráfico
      */
     private Map<Date, Integer> readCSVFile(String filePath) {
         Map<Date, Integer> dayMessageCountMap = new TreeMap<>();
