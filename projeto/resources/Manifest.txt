@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: . lib/json.jar lib/miglayout.jar lib/miglayoutcore.jar lib/flatlaf.jar lib/jfreechart.jar lib/jcommon.jar
+Main-Class: Kernel
