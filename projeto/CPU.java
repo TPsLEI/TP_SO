@@ -1,7 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.LinkedBlockingQueue;
-import javax.swing.JOptionPane;
 
 public class CPU extends Thread {
     private LinkedBlockingQueue<String> dataQueue;

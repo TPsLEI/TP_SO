@@ -2,6 +2,7 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.*;
 import java.nio.file.*;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.io.IOException;
 
@@ -53,9 +54,9 @@ public class Middleware {
         messageListenerThread.setDaemon(true);
         messageListenerThread.start();
     }
-
-    public static void handleMessage(String message, MessagePage messagePage) {
-        dataQueue.offer(message);
+    
+    public static void handleMessage(List<String> messages, MessagePage messagesPage) {
+        dataQueue.addAll(messages);
     }
 
 }
