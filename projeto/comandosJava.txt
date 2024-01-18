@@ -1,0 +1,12 @@
+
+- Comando de compilação:
+	
+	javac -cp ./lib/miglayout.jar;./lib/miglayoutcore.jar;./lib/flatlaf.jar;./lib/json.jar;./lib/jfreechart.jar;./lib/jcommon.jar -d ./classes -encoding UTF-8 *.java
+	
+- Comando de execução:
+
+	java -cp .;./lib/miglayout.jar;./lib/miglayoutcore.jar;./lib/flatlaf.jar;./lib/json.jar;./lib/jfreechart.jar;./lib/jcommon.jar;./classes Kernel
+	
+- Comando para executar o .jar
+
+	java -jar projeto.jar
