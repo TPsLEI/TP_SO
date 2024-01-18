@@ -78,7 +78,7 @@ public class Kernel {
 
                             page.setVisible(true);
                         } else {
-                            System.out.println("Password errada. Por favor, tente novamente.");
+                            JOptionPane.showMessageDialog(null, "Password incorreta, tente novamente!");
                         }
                         break;
                     }
@@ -86,7 +86,7 @@ public class Kernel {
             }
 
             if (!userFound) {
-                System.out.println("Utilizador não encontrado. Por favor, tente novamente.");
+                JOptionPane.showMessageDialog(null, "Utilizador não encontrado. Tente novamente!");
             }
         } catch (IOException e) {
             e.printStackTrace();
