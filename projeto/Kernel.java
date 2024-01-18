@@ -181,34 +181,34 @@ public class Kernel {
             @Override
             protected Void doInBackground() throws Exception {
                 while (!isCancelled()) {
-                    try (InputStream inputStream = Kernel.class.getClassLoader()
-                            .getResourceAsStream("files/dados.csv")) {
+                    try (InputStream inputStream = Kernel.class.getClassLoader().getResourceAsStream("files/dados.csv")) {
                         if (inputStream != null) {
                             byte[] bytes = inputStream.readAllBytes();
                             String fileContent = new String(bytes, StandardCharsets.UTF_8);
-                            publish(fileContent);
+                            textBox.setText(fileContent);
                         } else {
-                            publish("Erro! Mensagens não encontradas");
+                            textBox.setText("Erro! Mensagens não encontradas");
                         }
                     } catch (IOException e) {
-                        publish("Erro! Mensagens não carregadas");
+                        textBox.setText("Erro! Mensagens não carregadas");
                     }
-
+    
                     TimeUnit.SECONDS.sleep(5);
                 }
                 return null;
             }
-
+    
             @Override
             protected void process(java.util.List<String> chunks) {
                 for (String chunk : chunks) {
-                    textBox.setText(chunk);
+                    textBox.append(chunk + "\n"); 
                 }
             }
         };
-
+    
         worker.execute();
     }
+    
 
     /*
      * Função que responde à mensagem enviada pelo Utilizador

@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import com.formdev.flatlaf.*;
-import com.formdev.flatlaf.ui.FlatRoundBorder;
 import net.miginfocom.swing.MigLayout;
 
 public class SattelitePage extends JFrame {
@@ -32,7 +31,6 @@ public class SattelitePage extends JFrame {
         exportLogs = new JButton("Exportar Logs");
         exitPage = new JButton("Voltar");
 
-        Kernel.updateTextBoxPeriodically(textBox);
 
         JPanel panel = new JPanel(
                 new MigLayout("wrap 3, fillx, insets 35 45 30 45", "[fill,250:280][fill,250:280][fill,250:280]"));
@@ -48,11 +46,11 @@ public class SattelitePage extends JFrame {
                 "[light]background:darken(@background,3%);" +
                 "[dark]background:" + darkerBackgroundStyle + ";");
 
-        textBox.setBorder(new FlatRoundBorder());
+        textBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
         textBox.setBackground(black);
-        textBox.setPreferredSize(new Dimension(1000, 470));
         textBox.setEditable(false);
 
+        Kernel.updateTextBoxPeriodically(textBox);
 
         Color lighterBackground = new Color(55, 53, 55);
         String lighterBackgroundStyle = String.format("rgb(%d,%d,%d)", lighterBackground.getRed(),
@@ -135,7 +133,9 @@ public class SattelitePage extends JFrame {
             page.setVisible(true);
         });
 
-        panel.add(textBox, "span, grow, wrap");
+        JScrollPane scrollPane = new JScrollPane(textBox, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panel.add(scrollPane, "span, grow, wrap");
         panel.add(seeGraph, "grow, push");
         panel.add(exportMessages, "grow, push");
         panel.add(exitPage, "grow, push");
